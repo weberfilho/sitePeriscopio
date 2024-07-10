@@ -1,10 +1,10 @@
+
+
 import Button from "@/components/button/Button";
 import Link from "next/link";
 
-
-
-export default function Home() {
-
+export default function Home() {  
+  
   var cityRef: string = "Belo Horizonte"
   return (
     <main className="flex flex-col px-16 pt-8  ">
@@ -29,13 +29,8 @@ export default function Home() {
         </Link>
         <Link href={`./places/placeList/4`}>
         <Button title="CINEMAS" />               
-        </Link>
-
-
-        
-        
-        
-        
+        </Link> 
+               
 
       </div>
 

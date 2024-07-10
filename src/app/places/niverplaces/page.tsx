@@ -45,8 +45,10 @@ const promoPlaces: PromoData[] = [
 const NiverPlaces = () => {
   return (
     <div >
-    <h1 className='p-10 text-center  font-serif font-bold text-2xl'>Promoção para aniversariantes</h1>
-    <ul>
+    <h1 className='text-center  font-serif font-bold text-2xl'>PROMOÇAO</h1>
+    <h1 className='p-4 pt-1 text-center  font-serif font-bold text-2xl'>ANIVERSARIANTES</h1>
+    <div className=' h-dvh overflow-auto'>
+    <ul className=''>
       {
         promoPlaces.map(promo => (
           <li key={promo.id} className='mx-2' >
@@ -58,6 +60,7 @@ const NiverPlaces = () => {
         )
       }
     </ul>
+    </div>    
   </div>
   )
 }

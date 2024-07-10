@@ -57,7 +57,7 @@ const idType: number = params.idtype
 //a partir do idtype que foi passado e do id da cidade que ta na variavel global
 
   return (
-    <div >
+    <div className='flex-1' >
       <h1 className='p-10 text-center  font-serif font-bold text-2xl'>{"BARES E BOTECOS"}</h1>
       <ul>
         {

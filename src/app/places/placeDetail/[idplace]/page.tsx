@@ -26,7 +26,6 @@ type Place = {
 }
 
 function placeDetail({ params }: Props) {
-
   //Fazer um fetch para pegar os dados do estabelecimento a partir do ID
 
   const place: Place = {

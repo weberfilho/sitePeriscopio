@@ -61,7 +61,7 @@ const eventList = () => {
   return (
     <div>
       <div >
-      <h1 className='p-10 text-center  font-serif font-bold text-2xl'>{"BARES E BOTECOS"}</h1>
+      <h1 className='p-10 text-center  font-serif font-bold text-2xl'>{"FESTAS E EVENTOS"}</h1>
       <ul>
         {
           events.map(event => (
