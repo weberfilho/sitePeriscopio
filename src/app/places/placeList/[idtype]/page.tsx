@@ -1,7 +1,10 @@
+'use client'
+
 import Link from 'next/link'
 import React from 'react'
 import PlaceCard from '@/components/cards/PlaceCard'
 import Globals from '@/components/global/Globals'
+import { useCityStorage } from '@/storage/city'
 
 interface Place {
   id: number
@@ -48,10 +51,10 @@ interface Props {
 
 }
 
-const placeList = ({params}: Props) => {
-  
-const cidade: string = Globals.cityName
-const idType: number = params.idtype
+const PlaceList = ({params}: Props) => {
+
+ 
+
 
 // const constPlacesBD: Place => Fazer um Fetch para preencher esta variável
 //a partir do idtype que foi passado e do id da cidade que ta na variavel global
@@ -75,4 +78,4 @@ const idType: number = params.idtype
   )
 }
 
-export default placeList
+export default PlaceList
