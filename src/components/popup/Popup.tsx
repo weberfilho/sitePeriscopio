@@ -10,8 +10,6 @@ interface PopUpProps {
   isVisible: boolean
 }
 
-
-
 export const Popup = ({ children, popUpRef, isVisible }: PopUpProps) => {
 
   const [popUpInstance, setPopUpInstance] = useState(null)
@@ -31,6 +29,12 @@ export const Popup = ({ children, popUpRef, isVisible }: PopUpProps) => {
     }
 
   }, [popUpRef])
+  
+  useEffect(()=>{
+    if(popUpInstance){
+      popUpInstance.update()
+    }
+  }, [isVisible])
 
   return (
     isVisible && (<div ref={popUpElement} style={{ display: isVisible ? 'block' : 'none' }}>{children}</div>)

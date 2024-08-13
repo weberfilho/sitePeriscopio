@@ -1,6 +1,8 @@
 'use client'
 
+import api from "@/api/api";
 import Button from "@/components/button/Button";
+import CitiesMenu from "@/components/citiesMenu/citiesMenu";
 import { Popup } from "@/components/popup/Popup";
 import { useCityStorage } from "@/storage/city";
 import Link from "next/link";
@@ -8,25 +10,26 @@ import { useEffect, useRef, useState } from "react";
 
 
 export default function Home() {
-  const [isPopUpVisible, setIsPopUpVisible] = useState(false)
+  const [isPopUpVisible, setIsPopUpVisible] = useState(true)
   const popUpRef = useRef<HTMLDivElement>(null)
   const cityId = useCityStorage((state) => state.cityId)
 
   function checkCity(cityId: number | null) {
     if (cityId === null) {
       setIsPopUpVisible(true)
+      console.log("true")
     } else {
       setIsPopUpVisible(false)
+      console.log("else")
     }
   }
+  console.log("weber", isPopUpVisible)
 
-  useEffect(() => {
-    checkCity(cityId)
-  }, [cityId])
-
-  // console.log("Cidade:",city)
+   // console.log("Cidade:",city)
   return (
+
     <main className="flex flex-col px-16 pt-8  ">
+      <CitiesMenu/>
       <input type="text" id="principal" className="px-4 py-4 border-spacing-4 rounded-full border-green border-solid border-2 shadow-md shadow-gray-500 border-black " placeholder="Pesquisar Festas e Locais">
       </input>
       <div className="flex flex-col space-y-5 my-8 ">
@@ -50,8 +53,7 @@ export default function Home() {
           <Button title="CINEMAS" />
         </Link>
       </div>
-      <Popup popUpRef={popUpRef} isVisible={isPopUpVisible}>{""}</Popup>
-
+      {/*<Popup popUpRef={popUpRef} isVisible={isPopUpVisible}>{""}</Popup>*/}        
     </main>
   );
 }
