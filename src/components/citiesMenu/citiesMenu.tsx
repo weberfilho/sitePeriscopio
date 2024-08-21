@@ -26,8 +26,7 @@ export const CitiesMenu = () => {
 
   return (
     <div className="bg-slate-50">
-      {cities.map((city: City) => {
-        return (
+      {cities.map((city: City) => (
           <div
             key={city.id}
             onClick={() => {
@@ -36,8 +35,7 @@ export const CitiesMenu = () => {
           >
             <p>{city.name}</p>
           </div>
-        );
-      })}
+      ))}
     </div>
   );
 };
