@@ -1,13 +1,15 @@
 "use client";
+
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
-import PopUp from "@/components/popup/Popup";
 import Button from "@/components/button/Button";
+import CitiesMenu from "@/components/citiesMenu/citiesMenu";
+const PopUp = dynamic(() => import("@/components/popup/Popup"), { ssr: false });
 
 import { useCityStorage } from "@/storage/city";
-import CitiesMenu from "@/components/citiesMenu/citiesMenu";
 
 export default function Home() {
   const [isPopUpVisible, setIsPopUpVisible] = useState(true);
@@ -59,7 +61,7 @@ export default function Home() {
           <Button title="CINEMAS" />
         </Link>
       </div>
-      
+
       {cityId === null && (
         <PopUp isVisible={isPopUpVisible}>
           <CitiesMenu />
