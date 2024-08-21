@@ -1,35 +1,45 @@
-import api from '@/api/api'
-import City from '@/app/interfaces/city'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
+import City from "@/interfaces/city";
+
+import { useCityStorage } from "@/storage/city";
+
+import api from "@/api/api";
 
 export const CitiesMenu = () => {
-  const [cities, setCities] = useState<City[]>([])
+  const [cities, setCities] = useState<City[]>([]);
 
   async function getCities() {
     try {
-      const { data, status } = await api.get("city")
-      console.log("response:", data)
+      const { data, status } = await api.get("city");
       if (status === 200) {
-        setCities(data)
+        setCities(data);
       }
-
     } catch (error) {
-      console.error("getCitiesError", error)
+      console.error("getCitiesError", error);
     }
   }
+
   useEffect(() => {
-    getCities()
-  })
+    getCities();
+  }, []);
 
   return (
-    <div>{
-      cities.map((city: City) => (
-        <div><p>{city.cityName}</p></div>
-      ))
-    }
+    <div className="bg-slate-50">
+      {cities.map((city: City) => {
+        return (
+          <div
+            key={city.id}
+            onClick={() => {
+              useCityStorage.getState().setCity(city.id, city.name);
+            }}
+          >
+            <p>{city.name}</p>
+          </div>
+        );
+      })}
     </div>
-  )
-}
+  );
+};
 
-export default CitiesMenu
+export default CitiesMenu;

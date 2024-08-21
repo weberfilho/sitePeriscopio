@@ -1,42 +1,48 @@
-'use client'
+"use client";
+import { useEffect, useState } from "react";
 
-import api from "@/api/api";
-import Button from "@/components/button/Button";
-import CitiesMenu from "@/components/citiesMenu/citiesMenu";
-import { Popup } from "@/components/popup/Popup";
-import { useCityStorage } from "@/storage/city";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
+import PopUp from "@/components/popup/Popup";
+import Button from "@/components/button/Button";
+
+import { useCityStorage } from "@/storage/city";
+import CitiesMenu from "@/components/citiesMenu/citiesMenu";
 
 export default function Home() {
-  const [isPopUpVisible, setIsPopUpVisible] = useState(true)
-  const popUpRef = useRef<HTMLDivElement>(null)
-  const cityId = useCityStorage((state) => state.cityId)
+  const [isPopUpVisible, setIsPopUpVisible] = useState(true);
+  const cityId = useCityStorage((state) => state.cityId);
 
-  function checkCity(cityId: number | null) {
-    if (cityId === null) {
-      setIsPopUpVisible(true)
-      console.log("true")
-    } else {
-      setIsPopUpVisible(false)
-      console.log("else")
+  console.warn("cityId", cityId);
+
+  useEffect(() => {
+    function checkCity(cityId: number | null) {
+      if (cityId === null) {
+        setIsPopUpVisible(true);
+      } else {
+        setIsPopUpVisible(false);
+      }
     }
-  }
-  console.log("weber", isPopUpVisible)
 
-   // console.log("Cidade:",city)
+    checkCity(cityId);
+  }),
+    [cityId];
+
   return (
-
-    <main className="flex flex-col px-16 pt-8  ">
-      <CitiesMenu/>
-      <input type="text" id="principal" className="px-4 py-4 border-spacing-4 rounded-full border-green border-solid border-2 shadow-md shadow-gray-500 border-black " placeholder="Pesquisar Festas e Locais">
-      </input>
-      <div className="flex flex-col space-y-5 my-8 ">
-        <Link href={{
-          pathname: "./events/eventDate",
-          query: { userId: 1, city: cityId }
-        }}>
+    <main className="flex flex-col px-16 pt-8">
+      <input
+        type="text"
+        id="principal"
+        className="border-green border-spacing-4 rounded-full border-2 border-solid border-black px-4 py-4 shadow-md shadow-gray-500"
+        placeholder="Pesquisar Festas e Locais"
+      />
+      <div className="my-8 flex flex-col space-y-5">
+        <Link
+          href={{
+            pathname: "./events/eventDate",
+            query: { userId: 1, city: cityId },
+          }}
+        >
           <Button title="FESTAS E EVENTOS" />
         </Link>
 
@@ -53,7 +59,12 @@ export default function Home() {
           <Button title="CINEMAS" />
         </Link>
       </div>
-      {/*<Popup popUpRef={popUpRef} isVisible={isPopUpVisible}>{""}</Popup>*/}        
+      
+      {cityId === null && (
+        <PopUp isVisible={isPopUpVisible}>
+          <CitiesMenu />
+        </PopUp>
+      )}
     </main>
   );
 }

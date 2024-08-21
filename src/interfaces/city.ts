@@ -1,6 +1,6 @@
 interface City {
-  cityId: number;
-  cityName: string;
+  id: number;
+  name: string;
 }
 
 export default City

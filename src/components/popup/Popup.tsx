@@ -1,42 +1,19 @@
-'use client'
+import React, { ReactNode } from "react";
 
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
-import { createPopper } from '@popperjs/core'
+type Props = {
+  isVisible?: boolean;
+  children: ReactNode;
+};
 
-interface PopUpProps {
+const SCREEN_WIDTH = window.innerWidth;
+const SCREEN_HEIGHT = window.innerHeight;
 
-  children: ReactNode
-  popUpRef: React.RefObject<HTMLElement>;
-  isVisible: boolean
-}
-
-export const Popup = ({ children, popUpRef, isVisible }: PopUpProps) => {
-
-  const [popUpInstance, setPopUpInstance] = useState(null)
-  const popUpElement = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!popUpRef.current || !popUpElement.current) {
-      return
-    }
-    const popper = createPopper(popUpRef.current, popUpElement.current, {
-      placement: 'bottom'
-    })
-    setPopUpInstance(popper)
-
-    return () => {
-      popper.destroy
-    }
-
-  }, [popUpRef])
-  
-  useEffect(()=>{
-    if(popUpInstance){
-      popUpInstance.update()
-    }
-  }, [isVisible])
-
+export default function PopUp({ isVisible = true, children }: Props) {
   return (
-    isVisible && (<div ref={popUpElement} style={{ display: isVisible ? 'block' : 'none' }}>{children}</div>)
-  )
+    <div
+      className={`fixed h-[450px] w-[300px] bg-slate-50 ${isVisible ? "block" : "hidden"}`}
+    >
+      {children}
+    </div>
+  );
 }
