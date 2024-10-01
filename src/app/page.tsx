@@ -62,7 +62,7 @@ export default function Home() {
         </Link>
       </div>
 
-      {cityId !== null && (
+      {cityId === null && isPopUpVisible && (
         <PopUp isVisible={true}>
           <CitiesMenu />
         </PopUp>
