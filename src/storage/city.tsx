@@ -9,7 +9,7 @@ interface CityState {
 
 export const useCityStorage = create<CityState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       cityId: null,
       cityName: "",
       setCity: (cityId: number, cityName: string) => set({ cityId, cityName }),

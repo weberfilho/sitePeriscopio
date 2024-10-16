@@ -25,7 +25,6 @@ export default function Home() {
         setIsPopUpVisible(false);
       }
     }
-
     checkCity(cityId);
   }),
     [cityId];

@@ -8,6 +8,7 @@ import api from "@/api/api";
 import { useCityStorage } from "@/storage/city";
 
 import City from "@/interfaces/city";
+import Button from "../button/Button";
 
 type formData = {
   city: string;
@@ -62,29 +63,29 @@ export const CitiesMenu = () => {
   }, [watch("city"), cities]);
 
   return (
-    <div className="bg-slate-50">
-      <h1 className="p-10">
+    <div className="bg-slate-50 border-4 h-full border-roxo2 rounded-lg">
+      <div className="w-full flex flex-col items-center">
+      <img src='/logoPeriscopio.jpg' className='w-32 mt-4' alt='imagem' />
+      </div>
+     
+      <h1 className="py-10 px-4 font-bold font-serif text-xl text-verde italic">
         Saia das profundezas e venha ver o que rola na superfície
       </h1>
-      <form onSubmit={handleSubmit(handleSend)}>
+      <form className="mx-4" onSubmit={handleSubmit(handleSend)}>
         <div>
           <span>Selecione a cidade: </span>
           {errors && (
             <span style={{ color: "red" }}>{errors.city?.message}</span>
           )}
-          <div>
+          <div className="flex-row flex justify-between">
             <input
               {...register("city")}
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-              style={{ padding: 8, marginRight: 8 }}
-            />
-            <button
-              type="submit"
-              className="rounded-xl bg-gradient-to-r from-verde via-cyan-600 to-roxo2 p-1 text-xl text-white"
-            >
-              Ok
-            </button>
+              className="w-9/12 border-2 border-black"
+            />         
+              
+            <Button title="OK" padding="p-1" width="w-2/12"/>
           </div>
           {showSuggestions && (
             <ul>
