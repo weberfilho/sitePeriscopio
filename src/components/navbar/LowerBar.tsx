@@ -6,7 +6,7 @@ import React from "react";
 
 const LowerBar = () => {
   return (    
-      <nav className="fixed bottom-0 left-0 w-full grid grid-cols-5 gap-2 mt-4 py-4 bg-white justify-items-center shadow-lg z-10">
+      <nav className="fixed bottom-0 left-0 w-full grid grid-cols-5 gap-2 mt-0 py-4 bg-white justify-items-center shadow-lg z-10">
         <Link href="/">
           <img src="/home.ico" className="w-8 self-center pt-2" alt="imagem" />
         </Link>
