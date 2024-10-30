@@ -1,6 +1,6 @@
 import React from 'react'
 
-type placeResume = { name: string, neighborhood: String, city: string, urlImage: string }
+type placeResume = { name: string, neighborhood: string, city: string, uf: string, urlImage: string }
 
 const PlaceCard = (props: placeResume) => {
   return (
@@ -12,7 +12,7 @@ const PlaceCard = (props: placeResume) => {
         <h1 className='font-serif text-2xl italic font-bold'>{props.name}</h1>
         <div className='inline'>
           <h3 className='inline font-bold text-lg '>Bairro: </h3>
-          <h3 className='mt-2 text-lg inline'>{`${props.neighborhood}, ${props.city} - MG`}</h3>
+          <h3 className='mt-2 text-lg inline'>{`${props.neighborhood}, ${props.city} - ${props.uf}`}</h3>
         </div>
       </div>
 

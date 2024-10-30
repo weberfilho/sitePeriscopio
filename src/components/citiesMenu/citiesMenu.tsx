@@ -29,6 +29,7 @@ export const CitiesMenu = () => {
   const [cities, setCities] = useState<City[]>([]);
   const [filteredCities, setFilteredCities] = useState<City[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const { setCity } = useCityStorage();
 
   async function getCities() {
     try {
@@ -63,29 +64,29 @@ export const CitiesMenu = () => {
   }, [watch("city"), cities]);
 
   return (
-    <div className="bg-slate-50 border-4 h-full border-roxo2 rounded-lg">
-      <div className="w-full flex flex-col items-center">
-      <img src='/logoPeriscopio.jpg' className='w-32 mt-4' alt='imagem' />
+    <div className="h-full rounded-lg border-4 border-roxo2 bg-slate-50">
+      <div className="flex w-full flex-col items-center">
+        <img src="/logoPeriscopio.jpg" className="mt-4 w-32" alt="imagem" />
       </div>
-     
-      <h1 className="py-10 px-4 font-bold font-serif text-xl text-verde italic">
+
+      <h1 className="px-4 py-10 font-serif text-xl font-bold italic text-verde">
         Saia das profundezas e venha ver o que rola na superfície
       </h1>
       <form className="mx-4" onSubmit={handleSubmit(handleSend)}>
         <div>
           <span>Selecione a cidade: </span>
           {errors && (
-            <span style={{ color: "red" }}>{errors.city?.message}</span>
+            <span style={{ color: "blue" }}>{errors.city?.message}</span>
           )}
-          <div className="flex-row flex justify-between">
+          <div className="flex flex-row justify-between">
             <input
               {...register("city")}
               onFocus={() => setShowSuggestions(true)}
               onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
               className="w-9/12 border-2 border-black"
-            />         
-              
-            <Button title="OK" padding="p-1" width="w-2/12"/>
+            />
+
+            <Button title="OK" padding="p-1" width="w-2/12" />
           </div>
           {showSuggestions && (
             <ul>
@@ -93,8 +94,9 @@ export const CitiesMenu = () => {
                 <li
                   key={city.id}
                   onClick={() => {
-                    useCityStorage.getState().setCity(city.id, city.name);
+                    setCity(city.id, city.name);
                     setShowSuggestions(false);
+                    
                   }}
                 >
                   {city.name}
@@ -109,4 +111,3 @@ export const CitiesMenu = () => {
 };
 
 export default CitiesMenu;
-
