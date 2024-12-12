@@ -4,9 +4,14 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import PlaceCard from "@/components/cards/PlaceCard";
 import api from "@/api/api";
-import { PlaceGeneralData } from "@/interfaces/place";
+import { PlaceData } from "@/interfaces/place";
 import { useCityStorage } from "@/storage/city";
 import dynamic from "next/dynamic";
+import CityIdStoraged from "@/components/cityIdStoraged/CityIdStoraged";
+import router from "next/router";
+import { usePlaceStorage } from "@/storage/place";
+//import Globals from "@/components/global/Globals";
+//const Globals = dynamic(() => import("@/components/input/Input"), { ssr: false });
 
 interface Props {
   params: { idtype: number };
@@ -14,8 +19,11 @@ interface Props {
 
 const PlaceList = ({ params }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [places, setPlaces] = useState<PlaceGeneralData[]>([]);
-  const { cityId } = useCityStorage();
+  const [places, setPlaces] = useState<PlaceData[]>([]);
+  const cityId = useCityStorage().cityId;
+
+  const { setPlace } = usePlaceStorage();
+
   console.log("Id da cidade:", cityId);
   // useEffect(() => {
   //    api
@@ -62,8 +70,17 @@ const PlaceList = ({ params }: Props) => {
     }
   }
 
-  console.log(places);
-  console.log("Erro category_name: ", places[0]);
+  console.log("Lista de places:", places);
+  console.log("Place indice zero: ", places[0]);
+
+  const handleClick = (place: PlaceData, event: any) => {
+    event.preventDefault();
+    console.log("PlaceParam: ", place);
+    setPlace(place);
+    router.push({
+      pathname: `../../places/placeDetail/${place.id}`,
+    });
+  };
 
   useEffect(() => {
     getPlaces();
@@ -71,21 +88,27 @@ const PlaceList = ({ params }: Props) => {
 
   return (
     <div className="flex-1">
-      <h1 className="p-10 text-center font-serif text-2xl font-bold">
+      <h1 className="p-4 text-center font-serif text-4xl font-bold italic">
         {places[0]?.category_name}
       </h1>
 
       <ul>
         {places.map((place) => (
           <li key={place.id} className="mx-2">
-            <Link href={`../../places/placeDetail/${place.id}`}>
-              <PlaceCard
-                name={place.name}
-                neighborhood={place.neighborhood}
-                city={place.city_name}
-                uf={place.city_state}
-                urlImage={place.url_image}
-              />
+            <Link
+              legacyBehavior
+              // onClick={() => handleClick}
+              href={`../../places/placeDetail/${place.id}`}
+            >
+              <a onClick={(e) => handleClick(place, e)}>
+                <PlaceCard
+                  name={place.name}
+                  neighborhood={place.neighborhood}
+                  city={place.city_name}
+                  uf={place.city_state}
+                  urlImage={place.url_image}
+                />
+              </a>
             </Link>
           </li>
         ))}

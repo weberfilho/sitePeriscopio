@@ -1,10 +1,15 @@
+"use client"
+
+import { useCityStorage } from "@/storage/city"
+
 
 export default abstract class Globals {
-static idCity: any = 1
+static idCity: number | null  = 1
 static cityName: string = "Sacramento"
 
-static GetCidade () {
+static async GetCidade () {
 
-  return localStorage.getItem("nome")
+  return await  useCityStorage().cityId
 }
+
 }

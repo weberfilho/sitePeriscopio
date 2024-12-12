@@ -13,9 +13,9 @@ import { useCityStorage } from "@/storage/city";
 
 export default function Home() {
   const [isPopUpVisible, setIsPopUpVisible] = useState(true);
-  const cityId = useCityStorage((state) => state.cityId);
+  const { cityId } = useCityStorage();
 
-  console.warn("cityId", cityId);
+  console.log("cityId", cityId);
 
   useEffect(() => {
     function checkCity(cityId: number | null) {
