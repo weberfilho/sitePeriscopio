@@ -5,7 +5,8 @@ import Button from "@/components/button/Button";
 import { PlaceData } from "@/interfaces/place";
 import Link from "next/link";
 import api from "@/api/api";
-import { usePlaceStorage } from "@/storage/place";
+//import Rating from "react-rating";
+var Rating = require("react-rating");
 
 interface Props {
   params: { idplace: number };
@@ -13,6 +14,7 @@ interface Props {
 
 const placeDetail = ({ params }: Props) => {
   const [place, setPlace] = useState<PlaceData>({} as PlaceData);
+  const [average, setAverage] = useState(0);
   // const { place } = usePlaceStorage();
   console.log("Place:", place);
   const [loading, setLoading] = useState(false);
@@ -27,7 +29,8 @@ const placeDetail = ({ params }: Props) => {
           },
         });
         if (status === 200) {
-          setPlace(data);
+          setPlace(data.placeDetail);
+          setAverage(data.average);
         }
       } catch (error) {
         console.error("placeDetail error:", error);
@@ -48,12 +51,13 @@ const placeDetail = ({ params }: Props) => {
         <h1 className="size-fit self-center font-serif text-4xl font-semibold italic">
           {place?.name}
         </h1>
-        <img
+        {/* <img
           src="https://maisbaqueiro.files.wordpress.com/2015/06/35estrelas.jpg"
           className="w-32 self-center pt-2"
           alt="imagem"
-        />
+        /> */}
       </div>
+      <Rating initialRating={3} />
       {place?.niver_promo && (
         <div className="p-x-2 mt-4 flex flex-col rounded-xl border-2 border-solid pt-2 shadow-md shadow-fuchsia-800">
           <h1 className="text-md self-center font-serif font-bold italic">
