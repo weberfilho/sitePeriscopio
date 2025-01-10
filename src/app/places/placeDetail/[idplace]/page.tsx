@@ -39,6 +39,7 @@ const placeDetail = ({ params }: Props) => {
         setLoading(false);
       }
     }
+
     fetchDetails();
   }, []);
 
@@ -47,62 +48,60 @@ const placeDetail = ({ params }: Props) => {
   }
 
   return (
-    <>
-      <div className="content-center px-8">
-        <div className="flex flex-col">
-          <h1 className="size-fit self-center font-serif text-4xl font-semibold italic">
-            {place?.name}
-          </h1>
-          {/* <img
+    <div className="content-center px-8">
+      <div className="flex flex-col">
+        <h1 className="size-fit self-center font-serif text-4xl font-semibold italic">
+          {place?.name}
+        </h1>
+        {/* <img
           src="https://maisbaqueiro.files.wordpress.com/2015/06/35estrelas.jpg"
           className="w-32 self-center pt-2"
           alt="imagem"
         /> */}
-          {average && (
-            <Rating
-              initialValue={average}
-              readonly
-              SVGstyle={{ display: "inline" }}
-            />
-          )}
-        </div>
-        {place?.niver_promo && (
-          <div className="p-x-2 mt-4 flex flex-col rounded-xl border-2 border-solid pt-2 shadow-md shadow-fuchsia-800">
-            <h1 className="text-md self-center font-serif font-bold italic">
-              ANIVERSARIANTES
-            </h1>
-            <p className="text-md flex flex-row px-4">{place?.niver_promo}</p>
-          </div>
+        {average && (
+          <Rating
+            initialValue={average}
+            readonly
+            SVGstyle={{ display: "inline" }}
+          />
         )}
-
-        <p className="mt-1 py-4">{place?.description}</p>
-
-        <p className="pb-4">
-          Endereço:
-          {` ${place?.adress?.street}, ${place?.adress?.number} ${place?.adress?.neighborhood} -  ${place?.city?.name} ${place?.city?.state}`}
-        </p>
-        <div className="grid grid-cols-2 gap-4">
-          <Link href="../../../places/placeList/1">
-            <Button title="AGENDA" />
-          </Link>
-          <Link href={`place?.url_contact`}>
-            <Button title="FOTOS" />
-          </Link>
-          <Link href={`place?.url_contact`}>
-            <Button title="JUCKEBOX" />
-          </Link>
-          <Link href={`place?.url_contact`}>
-            <Button title="CARDAPIO" />
-          </Link>
-          <Link href="/places/placeComents/1">
-            <Button title="AVALIAÇÕES" />
-          </Link>
-          <Link href={`place?.url_contact`}>
-            <Button title="CONTATO" />
-          </Link>
-        </div>
       </div>
-    </>
+      {place?.niver_promo && (
+        <div className="p-x-2 mt-4 flex flex-col rounded-xl border-2 border-solid pt-2 shadow-md shadow-fuchsia-800">
+          <h1 className="text-md self-center font-serif font-bold italic">
+            ANIVERSARIANTES
+          </h1>
+          <p className="text-md flex flex-row px-4">{place?.niver_promo}</p>
+        </div>
+      )}
+
+      <p className="mt-1 py-4">{place?.description}</p>
+
+      <p className="pb-4">
+        Endereço:
+        {` ${place?.adress?.street}, ${place?.adress?.number} ${place?.adress?.neighborhood} -  ${place?.city?.name} ${place?.city?.state}`}
+      </p>
+      <div className="grid grid-cols-2 gap-4">
+        <Link href="../../../places/placeList/1">
+          <Button title="AGENDA" />
+        </Link>
+        <Link href={`place?.url_contact`}>
+          <Button title="FOTOS" />
+        </Link>
+        <Link href={`place?.url_contact`}>
+          <Button title="JUCKEBOX" />
+        </Link>
+        <Link href={`place?.url_contact`}>
+          <Button title="CARDAPIO" />
+        </Link>
+        <Link href="/places/placeComents/1">
+          <Button title="AVALIAÇÕES" />
+        </Link>
+        <Link href={`place?.url_contact`}>
+          <Button title="CONTATO" />
+        </Link>
+      </div>
+    </div>
   );
 };
 
