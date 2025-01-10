@@ -1,11 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
+
+import Link from "next/link";
+
 import PlaceCard from "@/components/cards/PlaceCard";
-import api from "@/api/api";
-import { PlaceShortData } from "@/interfaces/place";
+
 import { useCityStorage } from "@/storage/city";
+import { PlaceShortData } from "@/interfaces/place";
+
+import api from "@/api/api";
 
 interface Props {
   params: { idtype: number };
@@ -15,10 +19,7 @@ const PlaceList = ({ params }: Props) => {
   const [places, setPlaces] = useState<PlaceShortData[]>([]);
   const cityId = useCityStorage().cityId;
 
-  console.log("Id da cidade:", cityId);
-
   async function getPlaces() {
-    console.log("CityId getPlace:", cityId);
     try {
       const { data, status } = await api.get("locals", {
         params: {
