@@ -18,12 +18,10 @@ interface Props {
 const placeDetail = ({ params }: Props) => {
   const [place, setPlace] = useState<PlaceData>({} as PlaceData);
   const [average, setAverage] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchDetails() {
       try {
-        setLoading(true);
         const { data, status } = await api.get("placedetail", {
           params: {
             place_id: params.idplace,
@@ -36,16 +34,10 @@ const placeDetail = ({ params }: Props) => {
       } catch (error) {
         console.error("placeDetail error:", error);
       } finally {
-        setLoading(false);
       }
     }
-
     fetchDetails();
   }, []);
-
-  if (loading === true) {
-    return "aguardando...";
-  }
 
   return (
     <div className="content-center px-8">
@@ -53,18 +45,15 @@ const placeDetail = ({ params }: Props) => {
         <h1 className="size-fit self-center font-serif text-4xl font-semibold italic">
           {place?.name}
         </h1>
-        {/* <img
-          src="https://maisbaqueiro.files.wordpress.com/2015/06/35estrelas.jpg"
-          className="w-32 self-center pt-2"
-          alt="imagem"
-        /> */}
-        {average && (
-          <Rating
-            initialValue={average}
-            readonly
-            SVGstyle={{ display: "inline" }}
-          />
-        )}
+        <div className="flex flex-row justify-center">
+          {average && (
+            <Rating
+              initialValue={average}
+              readonly
+              SVGstyle={{ display: "inline" }}
+            />
+          )}
+        </div>
       </div>
       {place?.niver_promo && (
         <div className="p-x-2 mt-4 flex flex-col rounded-xl border-2 border-solid pt-2 shadow-md shadow-fuchsia-800">
