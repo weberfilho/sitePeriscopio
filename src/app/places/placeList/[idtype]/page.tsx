@@ -13,6 +13,7 @@ import api from "@/api/api";
 
 interface Props {
   params: { idtype: number };
+  
 }
 
 const PlaceList = ({ params }: Props) => {

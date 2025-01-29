@@ -70,26 +70,43 @@ const placeDetail = ({ params }: Props) => {
         Endereço:
         {` ${place?.adress?.street}, ${place?.adress?.number} ${place?.adress?.neighborhood} -  ${place?.city?.name} ${place?.city?.state}`}
       </p>
-      <div className="grid grid-cols-2 gap-4">
-        <Link href="../../../places/placeList/1">
-          <Button title="AGENDA" />
-        </Link>
-        <Link href={`place?.url_contact`}>
-          <Button title="FOTOS" />
-        </Link>
-        <Link href={`place?.url_contact`}>
-          <Button title="JUCKEBOX" />
-        </Link>
-        <Link href={`place?.url_contact`}>
-          <Button title="CARDAPIO" />
-        </Link>
-        <Link href="/places/placeComents/1">
-          <Button title="AVALIAÇÕES" />
-        </Link>
-        <Link href={`place?.url_contact`}>
-          <Button title="CONTATO" />
-        </Link>
-      </div>
+      {place.category_id === 1 || place.category_id === 2 ? (
+        <div className="grid grid-cols-2 gap-4">
+          <Link href="../../../places/placeList/1">
+            <Button title="AGENDA" />
+          </Link>
+          <Link href={`place?.url_contact`}>
+            <Button title="FOTOS" />
+          </Link>
+          <Link href={`place?.url_contact`}>
+            <Button title="JUCKEBOX" />
+          </Link>
+          <Link href={`place?.url_contact`}>
+            <Button title="CARDAPIO" />
+          </Link>
+          <Link href={`/places/placeComents/${place.id}`}>
+            <Button title="AVALIAÇÕES" />
+          </Link>
+          <Link href={`place?.url_contact`}>
+            <Button title="CONTATO" />
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-4">
+          <Link href="../../../places/placeList/1">
+            <Button title="AGENDA" />
+          </Link>
+          <Link href={`place?.url_contact`}>
+            <Button title="FOTOS" />
+          </Link>
+          <Link href="/places/placeComents/1">
+            <Button title="AVALIAÇÕES" />
+          </Link>
+          <Link href={`place?.url_contact`}>
+            <Button title="CONTATO" />
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

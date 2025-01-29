@@ -1,6 +1,6 @@
 import React from "react";
 
-type Evento = {name:String, local:String , startDate:string, urlImage: string}
+type Evento = {name:String, local:String , startDate:Date | string, urlImage: string}
 
 const EventCard = (props: Evento) => {
 

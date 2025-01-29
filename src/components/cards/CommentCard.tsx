@@ -18,14 +18,17 @@ const CommentCard = (props: Comment) => {
   return (
     <div className="my-2 flex flex-col rounded-xl border-2 border-solid border-black px-2 py-1 shadow-md shadow-gray-500">
       <div className="flex w-full flex-row justify-between">
-        <h1 className="font-serif text-2xl font-bold italic">
+        <h4 className="font-serif text-lg font-bold italic">
           {props.userName}
-        </h1>
-        <Rating
-          initialValue={props.rating}
-          readonly
-          SVGstyle={{ display: "inline" }}
-        />
+        </h4>
+        <div>
+          <Rating
+            initialValue={props.rating}
+            readonly
+            size={20}
+            SVGstyle={{ display: "inline" }}
+          />
+        </div>
       </div>
       <p>{props.commentText}</p>
 

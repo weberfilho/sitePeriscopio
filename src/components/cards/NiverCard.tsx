@@ -1,6 +1,6 @@
 import React from 'react'
 
-type PromoInfo = { namePlace: String, promoDescription: string, urlImage: string }
+type PromoInfo = { namePlace: String, promoDescription: string }
 
 const NiverCard = (props: PromoInfo) => {
   return (
