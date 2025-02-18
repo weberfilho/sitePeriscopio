@@ -47,3 +47,10 @@ export interface PlaceData {
     neighborhood: string;
   };
 }
+
+export interface PlaceSuggestion {
+  name: string;
+  city: string;
+  description: string;
+  contact: string;
+}

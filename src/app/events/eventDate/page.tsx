@@ -1,33 +1,38 @@
 "use client";
 
 import Button from "@/components/button/Button";
+import Calendar from "@/components/calendar/Calendar";
+import PopUp from "@/components/popup/Popup";
 import Link from "next/link";
+
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
+
+import { format } from "date-fns";
 
 const eventDate = () => {
-  const [selectDate, setSelectDate] = useState(new Date());
+  const [isPopUpVisible, setIsPopUpVisible] = useState(true);
+
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  function handleDateChange(date: any) {
-    console.log(date);
-  }
+  const today: Date = new Date();
+  console.log(today);
+
+  const formattedDate = format(today, "yyyy-MM-dd");
+  console.log(formattedDate);
 
   function handleShowDatePicker() {
-    setShowDatePicker((prevState) => !prevState);
+    setShowDatePicker(true);
   }
 
   return (
     <div className="mx-16 my-8 flex flex-grow flex-col space-y-5">
       {showDatePicker && (
-        <DatePicker
-          selected={selectDate}
-          onChange={handleDateChange}
-          showIcon
-        />
+        <PopUp isVisible={isPopUpVisible}>
+          <Calendar action={() => setIsPopUpVisible(false)} />
+        </PopUp>
       )}
 
-      <Link href={`../../events/eventList/1`}>
+      <Link href={`../../events/eventList/${formattedDate}`}>
         <Button title="HOJE" />
       </Link>
 

@@ -71,8 +71,8 @@ const placeDetail = ({ params }: Props) => {
         {` ${place?.adress?.street}, ${place?.adress?.number} ${place?.adress?.neighborhood} -  ${place?.city?.name} ${place?.city?.state}`}
       </p>
       {place.category_id === 1 || place.category_id === 2 ? (
-        <div className="grid grid-cols-2 gap-4">
-          <Link href="../../../places/placeList/1">
+        <div className="mb-8 grid grid-cols-2 gap-4">
+          <Link href={`/places/scheduledevents/${place.adress_id}`}>
             <Button title="AGENDA" />
           </Link>
           <Link href={`place?.url_contact`}>
@@ -92,14 +92,14 @@ const placeDetail = ({ params }: Props) => {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4">
-          <Link href="../../../places/placeList/1">
+        <div className="mb-8 grid grid-cols-2 gap-4">
+          <Link href={`../../places/scheduledevents/${place.adress_id}`}>
             <Button title="AGENDA" />
           </Link>
           <Link href={`place?.url_contact`}>
             <Button title="FOTOS" />
           </Link>
-          <Link href="/places/placeComents/1">
+          <Link href={`/places/placeComents/${place.id}`}>
             <Button title="AVALIAÇÕES" />
           </Link>
           <Link href={`place?.url_contact`}>

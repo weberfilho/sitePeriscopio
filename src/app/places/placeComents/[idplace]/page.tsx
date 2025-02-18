@@ -39,7 +39,7 @@ const CommentsList = ({ params }: Props) => {
   console.log("Comentarios:", comments);
 
   return (
-    <div className="px-2">
+    <div className="mb-8 px-2">
       <div className="mb-8 mt-4 flex flex-col">
         <h1 className="px-4 text-center font-serif text-4xl font-bold">{}</h1>
         <div className="flex w-full flex-row justify-center">

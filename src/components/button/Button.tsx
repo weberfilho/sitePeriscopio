@@ -1,4 +1,5 @@
 import React from "react";
+import { any } from "zod";
 
 type ButtonType = "button" | "submit";
 
@@ -7,6 +8,7 @@ type Props = {
   title: string;
   width?: string;
   padding?: string;
+  onClick?: () => any
 };
 
 const Button = ({
@@ -14,6 +16,7 @@ const Button = ({
   title,
   width = "w-full",
   padding = "p-6",
+  
 }: Props) => {
   return (
     <button
@@ -24,6 +27,6 @@ const Button = ({
     </button>
   );
 
-  //w-full rounded-xl bg-cyan-600 bg-gradient-to-r from-roxo2 via-cyan-600 to-verde p-6 text-xl text-white
+  
 };
 export default Button;

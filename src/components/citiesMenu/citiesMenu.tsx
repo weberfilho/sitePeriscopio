@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 
 import * as zod from "zod";
@@ -72,7 +74,7 @@ export const CitiesMenu = () => {
       <h1 className="px-4 py-10 font-serif text-xl font-bold italic text-verde">
         Saia das profundezas e venha ver o que rola na superfície
       </h1>
-      <form className="mx-4" onSubmit={handleSubmit(handleSend)}>
+      <form className="mx-4 mb-24" onSubmit={handleSubmit(handleSend)}>
         <div>
           <span>Selecione a cidade: </span>
           {errors && (
@@ -96,7 +98,6 @@ export const CitiesMenu = () => {
                   onClick={() => {
                     setCity(city.id, city.name);
                     setShowSuggestions(false);
-                    
                   }}
                 >
                   {city.name}

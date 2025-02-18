@@ -10,14 +10,16 @@ import { useCityStorage } from "@/storage/city";
 import { PlaceShortData } from "@/interfaces/place";
 
 import api from "@/api/api";
+import PopUp from "@/components/popup/Popup";
+import PopUpMessage from "@/components/popUpMessage/page";
 
 interface Props {
   params: { idtype: number };
-  
 }
 
 const PlaceList = ({ params }: Props) => {
   const [places, setPlaces] = useState<PlaceShortData[]>([]);
+  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const cityId = useCityStorage().cityId;
 
   async function getPlaces() {
@@ -30,6 +32,9 @@ const PlaceList = ({ params }: Props) => {
       });
       if (status === 200) {
         setPlaces(data);
+        if (data.length === 0) {
+          setIsPopUpVisible(true);
+        }
       }
     } catch (error) {
       console.error("Erro getPlaces:", error);
@@ -46,6 +51,14 @@ const PlaceList = ({ params }: Props) => {
       <h1 className="p-4 text-center font-serif text-4xl font-bold italic">
         {places[0]?.category.name}
       </h1>
+      {isPopUpVisible && (
+          <PopUp isVisible={isPopUpVisible}>
+            <PopUpMessage
+              text="Não existem estabelecimentos cadastrados nesta categoria"
+              action={() => setIsPopUpVisible(false)}
+            />
+          </PopUp>
+        )}
 
       <ul>
         {places.map((place) => (

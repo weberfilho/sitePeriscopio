@@ -11,8 +11,8 @@ const SignIn = () => {
         </h1>
       </div>
       <div className='mt-8' >
-        <Input minHeight="12" labelText="Email" idInput= "1"/>
-        <Input minHeight="12" labelText="Senha" idInput= "2" />
+        <Input minHeight="12" labelText="Email"/>
+        <Input minHeight="12" labelText="Senha" />
         <Link href="../signup">Esqueci minha senha</Link>     
 
       </div>
