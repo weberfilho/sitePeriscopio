@@ -33,24 +33,16 @@ const Calendar = ({ action }: Props) => {
       </div>
 
       <span className="ml-4 mt-8">Selecione a data do evento: </span>
-      <div className="ml-4 mr-8 mb-52 flex flex-row justify-between">
+      <div className="mb-52 ml-4 mr-8 flex flex-row justify-between">
         <DatePicker
           className="min-h-8 rounded-md border-2 border-solid border-black"
           selected={selectedDate}
           onSelect={handleDataChange}
-          dateFormat={"dd-MM-yyyy"}
+          dateFormat={"dd/MM/yyyy"}
         />
 
         <Link href={`../../events/eventList/${parameterDate}`} onClick={action}>
-          
-        <Button title="OK" width="20" padding="p-4" />
-          
-          {/* <button
-            className="h-12 w-16 rounded-xl bg-gradient-to-br from-roxo2 via-cyan-700 to-verde text-xl text-white"
-            onClick={action}
-          >
-            OK
-          </button> */}
+          <Button title="OK" width="20" padding="p-2" />
         </Link>
       </div>
     </div>
