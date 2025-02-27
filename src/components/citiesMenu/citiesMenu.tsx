@@ -70,8 +70,11 @@ export const CitiesMenu = () => {
       <div className="flex w-full flex-col items-center">
         <img src="/logoPeriscopio.jpg" className="mt-4 w-32" alt="imagem" />
       </div>
+      <p className="text-lgf bold pb-2 text-center font-sans font-semibold italic">
+        Fun Guide
+      </p>
 
-      <h1 className="px-4 py-10 font-serif text-xl font-bold italic text-verde">
+      <h1 className="px-4 pb-10 pt-4 font-serif text-xl font-bold italic text-verde">
         Saia das profundezas e venha ver o que rola na superfície
       </h1>
       <form className="mx-4 mb-24" onSubmit={handleSubmit(handleSend)}>

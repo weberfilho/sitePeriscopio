@@ -1,17 +1,17 @@
-"use client";
-import CitiesMenu from "@/components/citiesMenu/citiesMenu";
-import PopUp from "@/components/popup/Popup";
-import { truncate } from "fs";
-import React from "react";
+// "use client";
+// import CitiesMenu from "@/components/citiesMenu/citiesMenu";
+// import PopUp from "@/components/popup/Popup";
 
-const citiesPopUp = () => {
-  return (
-    <div>
-      <PopUp isVisible={true}>
-        <CitiesMenu />
-      </PopUp>
-    </div>
-  );
-};
+// import React from "react";
 
-export default citiesPopUp;
+// const citiesPopUp = () => {
+//   return (
+//     <div>
+//       <PopUp isVisible={true}>
+//         <CitiesMenu />
+//       </PopUp>
+//     </div>
+//   );
+// };
+
+// export default citiesPopUp;

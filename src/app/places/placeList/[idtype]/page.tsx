@@ -24,7 +24,7 @@ const PlaceList = ({ params }: Props) => {
 
   async function getPlaces() {
     try {
-      const { data, status } = await api.get("locals", {
+      const { data, status } = await api.get("places", {
         params: {
           city_id: cityId,
           category_id: params.idtype,
@@ -52,13 +52,13 @@ const PlaceList = ({ params }: Props) => {
         {places[0]?.category.name}
       </h1>
       {isPopUpVisible && (
-          <PopUp isVisible={isPopUpVisible}>
-            <PopUpMessage
-              text="Não existem estabelecimentos cadastrados nesta categoria"
-              action={() => setIsPopUpVisible(false)}
-            />
-          </PopUp>
-        )}
+        <PopUp isVisible={isPopUpVisible}>
+          <PopUpMessage
+            text="Não existem estabelecimentos cadastrados nesta categoria"
+            action={() => setIsPopUpVisible(false)}
+          />
+        </PopUp>
+      )}
 
       <ul>
         {places.map((place) => (
@@ -69,7 +69,7 @@ const PlaceList = ({ params }: Props) => {
                 neighborhood={place.adress.neighborhood}
                 city={place.city.name}
                 uf={place.city.state}
-                urlImage={place?.image_place.path}
+                urlImage={place?.image_place.url}
               />
             </Link>
           </li>

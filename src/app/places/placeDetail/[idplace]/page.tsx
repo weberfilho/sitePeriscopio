@@ -75,7 +75,7 @@ const placeDetail = ({ params }: Props) => {
           <Link href={`/places/scheduledevents/${place.adress_id}`}>
             <Button title="AGENDA" />
           </Link>
-          <Link href={`place?.url_contact`}>
+          <Link href={`/places/placepictures/${place.id}`}>
             <Button title="FOTOS" />
           </Link>
           <Link href={`place?.url_contact`}>

@@ -1,7 +1,7 @@
 export interface PlaceShortData {
   id: number;
   name: string;
-  image_place: { path: string };
+  image_place: { url: string };
   priority: number;
   city: {
     id: number;

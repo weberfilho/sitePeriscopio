@@ -9,6 +9,7 @@ export interface EventShortData {
   name: string;
   local_name: string;
   start_date: Date | string;
+  event_image: { url: string };
 }
 export interface EventData {
   id: number;
@@ -23,8 +24,7 @@ export interface EventData {
   description: string;
   url_ticket: string;
   priority: number;
-  event_image: { path: string };
-  url: string;
+  event_image: { url: string };
   adress: {
     id: number;
     street: string;

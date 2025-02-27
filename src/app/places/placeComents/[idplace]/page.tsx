@@ -4,7 +4,7 @@ import CommentCard from "@/components/cards/CommentCard";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
-import Comment from "@/interfaces/comment";
+import { Comment } from "@/interfaces/comment";
 import api from "@/api/api";
 
 interface Props {
@@ -36,12 +36,13 @@ const CommentsList = ({ params }: Props) => {
     }
     fetchComments();
   }, []);
-  console.log("Comentarios:", comments);
 
   return (
     <div className="mb-8 px-2">
       <div className="mb-8 mt-4 flex flex-col">
-        <h1 className="px-4 text-center font-serif text-4xl font-bold">{}</h1>
+        <h1 className="px-4 text-center font-serif text-4xl font-bold">
+          {comments[0]?.place.name}
+        </h1>
         <div className="flex w-full flex-row justify-center">
           <Rating
             initialValue={average}

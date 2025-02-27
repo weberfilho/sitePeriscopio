@@ -13,13 +13,14 @@ const PopUpMessage = ({ text, action }: Props) => {
       <div className="flex h-fit w-full flex-col items-center">
         <img src="/logoPeriscopio.jpg" className="mt-4 w-32" alt="imagem" />
       </div>
-      <p className='text-lgf pb-2 font-semibold font-sans italic bold'>Fun Guide</p>
-      <h3 className="px-4 py-10 font-serif text-xl font-bold italic text-verde">
+      <p className="text-lgf bold pb-2 font-sans font-semibold italic">
+        Fun Guide
+      </p>
+      <h3 className="px-4 pb-10 pt-2 font-serif text-xl font-bold italic text-verde">
         {text}
       </h3>
       <Link href="/" onClick={action} className="mb-12">
         <Button title="OK" width="24" padding="p-3" />
-        
       </Link>
     </div>
   );

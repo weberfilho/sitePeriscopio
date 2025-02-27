@@ -8,7 +8,7 @@ import PopUpMessage from "@/components/popUpMessage/page";
 import { EventShortData } from "@/interfaces/event";
 import { useCityStorage } from "@/storage/city";
 
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 import { ptBR } from "date-fns/locale";
 import Link from "next/link";
@@ -37,7 +37,6 @@ const eventList = ({ params }: Props) => {
         if (data.length === 0) {
           setIsPopUpVisible(true);
         }
-        
       }
     } catch (error) {
       console.error("Erro getPlaces:", error);
@@ -70,8 +69,14 @@ const eventList = ({ params }: Props) => {
                 <EventCard
                   name={event.name}
                   local={event.local_name}
-                  startDate={event.start_date}
-                  urlImage={"https://images.sympla.com.br/61f187a3d8cb3-xs.jpg"}
+                  startDate={format(
+                    parseISO(event.start_date as string),
+                    "dd/MM - EEEE",
+                    {
+                      locale: ptBR,
+                    },
+                  )}
+                  urlImage={event.event_image.url}
                 />
               </Link>
             </li>

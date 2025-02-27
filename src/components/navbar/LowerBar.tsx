@@ -17,7 +17,7 @@ const LowerBar = () => {
       </Link>
       <Link href="/sugestions/sugestionsearch">
         <img
-          src="/sugestion.ico"
+          src="/suggestions.ico"
           className="w-8 self-center pt-2"
           alt="imagem"
         />
