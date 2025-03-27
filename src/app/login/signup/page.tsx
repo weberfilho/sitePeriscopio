@@ -9,11 +9,13 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { InputMask } from "@react-input/mask";
 
 const validationData = z
   .object({
     name: z.string().nonempty("Campo obrigatorio"),
-    birthday: z.string().nonempty("Campo Obrigatorio"),
+    birthday: z.string().nonempty("Campo obrigatorio"),
+    sex: z.string().nonempty("Campo obrigatorio"),
     email: z.string().email(),
     password: z
       .string()
@@ -40,9 +42,52 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
     setError,
+    getValues,
+    watch,
+    reset,
   } = useForm<SignUpData>({
-    resolver: zodResolver(validationData), // Apply the zodResolver
+    resolver: zodResolver(validationData),
+    defaultValues: {
+      birthday: "00/00/0000",
+    }, // Apply the zodResolver
   });
+
+  const {
+    ref,
+    onChange: registerOnChange,
+    ...rest
+  } = register("birthday", {
+    required: "Campo obrigatório",
+    pattern: {
+      value: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+      message: "Formato inválido (DD/MM/AAAA)",
+    },
+  });
+
+  const formatDate = (value: string) => {
+    value = value.replace(/\D/g, "");
+    if (value.length > 8) value = value.slice(0, 8);
+
+    value = value.replace(/(\d{2})(\d)/, "$1/$2");
+    value = value.replace(/(\d{2})\/(\d{2})(\d)/, "$1/$2/$3");
+
+    return value;
+  };
+
+  const handleChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatDate(e.target.value);
+    const newEvent = {
+      ...e,
+      target: {
+        ...e.target,
+        value: formattedValue,
+      },
+    };
+
+    registerOnChange(newEvent);
+
+    console.log("Value: ", formattedValue);
+  };
 
   const onSubmit: SubmitHandler<SignUpData> = async (data) => {
     try {
@@ -64,6 +109,7 @@ const SignUp = () => {
     } catch (error) {
       console.error("Erro:", error);
     } finally {
+      reset();
     }
   };
 
@@ -84,9 +130,25 @@ const SignUp = () => {
         <div className="flex w-full flex-row justify-between">
           <div className="mr-0 w-3/5">
             <legend className="mt-4">Nascimento(dd/mm/aaaa):</legend>
+            {/* <InputMask
+              mask="99/99/9999"
+              placeholder="DD/MM/AAAA"
+              className="flex min-h-12 w-full flex-row rounded-md border-2 border-solid border-black px-4 shadow-md shadow-gray-500"
+              replacement={{ d: /\d/, m: /\d/, y: /\d/ }}
+              value={getValues("birthday")}
+              {...register("birthday")}
+            />
+
+            {errors.birthday && (
+              <p className="text-red-700">{errors.birthday.message}</p>
+            )} */}
             <input
               className="flex min-h-12 w-full flex-row rounded-md border-2 border-solid border-black px-4 shadow-md shadow-gray-500"
-              {...register("birthday")}
+              {...rest}
+              onChange={handleChangeDate}
+              ref={ref}
+
+              // {...register("birthday")}
             />
             {errors.birthday && (
               <p className="text-red-700">{errors.birthday.message}</p>
@@ -98,6 +160,7 @@ const SignUp = () => {
               className="flex min-h-12 w-full flex-row rounded-md border-2 border-solid border-black px-4 shadow-md shadow-gray-500"
               {...register("sex")}
             >
+              <option value=""> </option>
               <option value="M">M</option>
               <option value="F">F</option>
             </select>
