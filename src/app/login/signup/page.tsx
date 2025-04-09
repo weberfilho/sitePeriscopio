@@ -77,6 +77,7 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error("SignUp, onSubmit error:", error);
+      //to do adicionar mensagem de erro
     } finally {
       reset();
     }
@@ -102,12 +103,13 @@ const SignUp = () => {
             <legend className="mt-4">Nascimento(dd/mm/aaaa):</legend>
             <input
               className="flex min-h-12 w-full flex-row rounded-md border-2 border-solid border-black px-4 shadow-md shadow-gray-500"
-              // type="date"
-              {...register("birthday", {
-                onChange: (event) => {
-                  handleChangeDate(event);
-                },
-              })}
+              type="date"
+              {...register("birthday")}
+              // {...register("birthday", {
+              //   onChange: (event) => {
+              //     handleChangeDate(event);
+              //   },
+              // })}
             />
             {errors.birthday && (
               <p className="text-red-700">{errors.birthday.message}</p>

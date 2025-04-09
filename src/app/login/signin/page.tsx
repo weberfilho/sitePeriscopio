@@ -1,31 +1,90 @@
-import Button from '@/components/button/Button'
-import Input from '@/components/input/Input'
-import Link from 'next/link'
-import React from 'react'
+"use client";
+
+import api from "@/api/api";
+import Button from "@/components/button/Button";
+import { SignInData } from "@/interfaces/user";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+
+const validationData = z.object({
+  email: z.string().email("Digite um e-mail válido"),
+  password: z
+    .string()
+    .nonempty("Campo obrigatório")
+    .min(4, { message: "Mínimo de 4 caracteres" }),
+});
 
 const SignIn = () => {
+  const {
+    reset,
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInData>({
+    resolver: zodResolver(validationData),
+  });
+
+  const handleLogin: SubmitHandler<SignInData> = async (formData) => {
+    try {
+      const { status, data } = await api.post("auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+      if (status === 200) {
+        console.log("voce esta logado");
+        console.log("Data:", data);
+      }
+    } catch (error) {
+      console.error("SignUp, onSubmit error:", error);
+      //to do adicionar mensagem de erro
+    } finally {
+      reset();
+    }
+  };
+
   return (
-    <div className='px-8 content-center'>
-      <div className='flex flex-col'>
-        <h1 className='mt-4 italic font-serif size-fit self-center text-4xl pb-2 font-semibold'>Login
+    <div className="mb-8 content-center px-8">
+      <div className="flex flex-col">
+        <h1 className="mt-4 size-fit self-center pb-2 font-serif text-4xl font-semibold italic">
+          Login
         </h1>
       </div>
-      <div className='mt-8' >
-        <Input minHeight="12" labelText="Email"/>
-        <Input minHeight="12" labelText="Senha" />
-        <Link href="../signup">Esqueci minha senha</Link>     
+      <form onSubmit={handleSubmit(handleLogin)}>
+        <div className="mt-8">
+          <legend className="mt-4">Email:</legend>
 
-      </div>
-      <div className='grid grid-cols-2 gap-4 mt-12'>
-        <Link href="/login/signup">
-          <Button title="CADASTRAR" />
-        </Link>
-        <Link href="">
-          <Button title="ENTRAR" />
-        </Link>
-      </div>
+          <input
+            className="flex min-h-12 w-full flex-row rounded-md border-2 border-solid border-black px-4 shadow-md shadow-gray-500"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-red-700">{errors.email.message}</p>
+          )}
+          <legend className="mt-4">Senha:</legend>
+
+          <input
+            className="flex min-h-12 w-full flex-row rounded-md border-2 border-solid border-black px-4 shadow-md shadow-gray-500"
+            {...register("password")}
+          />
+          {errors.password && (
+            <p className="text-red-700">{errors.password.message}</p>
+          )}
+          <Link href="../signup">Esqueci minha senha</Link>
+        </div>
+        <div className="mt-12 grid grid-cols-2 gap-4">
+          <Link href="/login/signup">
+            <Button title="CADASTRAR" />
+          </Link>
+
+          <Button title="ENTRAR" type="submit" />
+        </div>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
