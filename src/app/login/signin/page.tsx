@@ -1,8 +1,9 @@
 "use client";
 
-import api from "@/api/api";
+import createApiInstance from "@/api/api";
 import Button from "@/components/button/Button";
 import { SignInData } from "@/interfaces/user";
+import { useTokenStorage } from "@/storage/token";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import React from "react";
@@ -28,6 +29,10 @@ const SignIn = () => {
     resolver: zodResolver(validationData),
   });
 
+  const api = createApiInstance();
+
+  const { setToken } = useTokenStorage();
+
   const handleLogin: SubmitHandler<SignInData> = async (formData) => {
     try {
       const { status, data } = await api.post("auth/login", {
@@ -36,7 +41,11 @@ const SignIn = () => {
       });
       if (status === 200) {
         console.log("voce esta logado");
-        console.log("Data:", data);
+        setToken(data);
+        const { status, data: userData } = await api.get("auth/me");
+        if (status === 200 && !!userData) {
+          console.log("Data:", userData);
+        }
       }
     } catch (error) {
       console.error("SignUp, onSubmit error:", error);

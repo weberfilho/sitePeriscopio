@@ -12,6 +12,8 @@ import Button from "@/components/button/Button";
 import api from "@/api/api";
 
 import { SignUpData } from "@/interfaces/user";
+import PopUp from "@/components/popup/Popup";
+import PopUpMessage from "@/components/popUpMessage/page";
 
 const validationData = z
   .object({
@@ -166,6 +168,21 @@ const SignUp = () => {
           <Button title="ENVIAR" type="submit" />
         </div>
       </form>
+      {isPopUpVisible && requestSuccess ? (
+        <PopUp isVisible={isPopUpVisible}>
+          <PopUpMessage
+            text="Seu cadastro foi realizado com sucesso com sucesso. Clique no link enviado para o seu email para viabilizar o seu acesso"
+            action={() => setIsPopUpVisible(false)}
+          />
+        </PopUp>
+      ) : (
+        <PopUp isVisible={isPopUpVisible}>
+          <PopUpMessage
+            text="Tivemos alguns problemas ao efetuar o seu cadastro. Por favor tente outra vez"
+            action={() => setIsPopUpVisible(false)}
+          />
+        </PopUp>
+      )}
     </div>
   );
 };
