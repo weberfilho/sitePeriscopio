@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import { Comment } from "@/interfaces/comment";
 import api from "@/api/api";
+import createApiInstance from "@/api/api";
 
 interface Props {
   params: { idplace: number };
@@ -14,6 +15,7 @@ interface Props {
 const CommentsList = ({ params }: Props) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [average, setAverage] = useState<number>(0);
+  const api = createApiInstance();
 
   useEffect(() => {
     async function fetchComments() {

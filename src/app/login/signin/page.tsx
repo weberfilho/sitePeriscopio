@@ -4,8 +4,11 @@ import createApiInstance from "@/api/api";
 import Button from "@/components/button/Button";
 import { SignInData } from "@/interfaces/user";
 import { useTokenStorage } from "@/storage/token";
+import { useUserStorage } from "@/storage/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,8 +33,10 @@ const SignIn = () => {
   });
 
   const api = createApiInstance();
+  const router = useRouter();
 
   const { setToken } = useTokenStorage();
+  const { setUserData } = useUserStorage();
 
   const handleLogin: SubmitHandler<SignInData> = async (formData) => {
     try {
@@ -41,10 +46,12 @@ const SignIn = () => {
       });
       if (status === 200) {
         console.log("voce esta logado");
-        setToken(data);
+        setToken(data.authToken);
         const { status, data: userData } = await api.get("auth/me");
         if (status === 200 && !!userData) {
           console.log("Data:", userData);
+          setUserData(userData.id, userData.name);
+          router.push("/");
         }
       }
     } catch (error) {

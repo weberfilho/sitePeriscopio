@@ -12,6 +12,7 @@ import { PlaceShortData } from "@/interfaces/place";
 import api from "@/api/api";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
+import createApiInstance from "@/api/api";
 
 interface Props {
   params: { idtype: number };
@@ -21,6 +22,7 @@ const PlaceList = ({ params }: Props) => {
   const [places, setPlaces] = useState<PlaceShortData[]>([]);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const cityId = useCityStorage().cityId;
+  const api = createApiInstance();
 
   async function getPlaces() {
     try {

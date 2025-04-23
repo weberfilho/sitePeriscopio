@@ -14,6 +14,7 @@ import api from "@/api/api";
 import { SignUpData } from "@/interfaces/user";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
+import createApiInstance from "@/api/api";
 
 const validationData = z
   .object({
@@ -44,6 +45,8 @@ const SignUp = () => {
   } = useForm<SignUpData>({
     resolver: zodResolver(validationData),
   });
+
+  const api = createApiInstance();
 
   const formatDate = (value: string) => {
     value = value.replace(/\D/g, "");

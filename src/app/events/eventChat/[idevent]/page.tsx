@@ -1,6 +1,6 @@
 "use client";
 
-import api from "@/api/api";
+import createApiInstance from "@/api/api";
 import Button from "@/components/button/Button";
 import ChatCard from "@/components/cards/ChatCard";
 
@@ -20,6 +20,8 @@ const EventChat = ({ params }: Props) => {
     watch,
     formState: { errors },
   } = useForm<any>();
+
+  const api = createApiInstance();
 
   async function getChatMessages() {
     try {

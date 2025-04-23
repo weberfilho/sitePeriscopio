@@ -1,23 +1,22 @@
 "use client";
 
 import Button from "@/components/button/Button";
-import Input from "@/components/input/Input";
+
 import { SentComment, ShortDataComment } from "@/interfaces/comment";
 import Link from "next/link";
 import React, { useState } from "react";
-
 import { Rating } from "react-simple-star-rating";
 import { useForm, SubmitHandler } from "react-hook-form";
-import api from "@/api/api";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
+import createApiInstance from "@/api/api";
+import { useUserStorage } from "@/storage/user";
 
 interface Props {
   params: { idplace: number };
 }
 
 const Assessment = ({ params }: Props) => {
-  const [sentComment, setSentComment] = useState<SentComment>();
   const [score, setScore] = useState(0);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
@@ -33,12 +32,13 @@ const Assessment = ({ params }: Props) => {
     setScore(data);
   };
 
+  const api = createApiInstance();
+  const { userId } = useUserStorage();
+
   const onSubmit: SubmitHandler<ShortDataComment> = async (data) => {
-    
     try {
-     ;
       const response = await api.post("sentcomment", {
-        user_id: 1,
+        user_id: userId,
         comment_text: data.assessment,
         place_id: params.idplace,
         score: score,
@@ -58,7 +58,6 @@ const Assessment = ({ params }: Props) => {
 
   return (
     <div className="mb-8 mt-4 flex flex-col px-8">
-      
       <h1 className="px-4 text-center font-serif text-4xl font-bold">
         Avaliar Local
       </h1>

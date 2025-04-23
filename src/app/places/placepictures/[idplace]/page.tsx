@@ -1,5 +1,6 @@
 "use client";
 
+import createApiInstance from "@/api/api";
 import api from "@/api/api";
 
 import React, { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ const PlacePictures = ({ params }: Props) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [namePlace, setNamePlace] = useState<string>("");
+  const api = createApiInstance();
 
   async function getPlacePictures() {
     try {

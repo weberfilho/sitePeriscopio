@@ -1,11 +1,12 @@
 "use client";
-import api from "@/api/api";
+
 import Button from "@/components/button/Button";
 import { EventData } from "@/interfaces/event";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { format, fromUnixTime, getTime, parse, parseISO } from "date-fns";
 import { Locale, ptBR } from "date-fns/locale";
+import createApiInstance from "@/api/api";
 
 interface Props {
   params: { idevent: number };
@@ -22,6 +23,8 @@ const eventDetail = ({ params }: Props) => {
   const [formattedData, setFormattedData] = useState<FormattedData>(
     {} as FormattedData,
   );
+
+  const api = createApiInstance();
 
   const DadosFormatados = (value: EventData) => {
     const modifiedDate: FormattedData = {

@@ -1,6 +1,6 @@
 "use client";
 
-import api from "@/api/api";
+import createApiInstance from "@/api/api";
 import NiverCard from "@/components/cards/NiverCard";
 import NiverData from "@/interfaces/niverplacesdata";
 import { useCityStorage } from "@/storage/city";
@@ -10,6 +10,8 @@ import React, { useEffect, useState } from "react";
 const NiverPlaces = () => {
   const [niverPromoPlaces, setNiverPromoPlaces] = useState<NiverData[]>([]);
   const cityId = useCityStorage().cityId;
+
+  const api = createApiInstance();
 
   async function getNiverPromo() {
     try {

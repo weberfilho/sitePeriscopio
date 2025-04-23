@@ -1,5 +1,6 @@
 "use client";
 
+import createApiInstance from "@/api/api";
 import api from "@/api/api";
 import Button from "@/components/button/Button";
 import PopUp from "@/components/popup/Popup";
@@ -13,6 +14,7 @@ const SuggestionEvent = () => {
   const [envetSuggested, setEventSuggested] = useState<EventSuggestion>();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
+  const api = createApiInstance();
 
   const {
     register,

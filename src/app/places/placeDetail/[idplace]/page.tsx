@@ -10,6 +10,7 @@ import Button from "@/components/button/Button";
 import { PlaceData } from "@/interfaces/place";
 
 import api from "@/api/api";
+import createApiInstance from "@/api/api";
 
 interface Props {
   params: { idplace: number };
@@ -18,6 +19,7 @@ interface Props {
 const placeDetail = ({ params }: Props) => {
   const [place, setPlace] = useState<PlaceData>({} as PlaceData);
   const [average, setAverage] = useState(0);
+  const api = createApiInstance();
 
   useEffect(() => {
     async function fetchDetails() {
