@@ -1,21 +1,22 @@
 export interface PlaceShortData {
   id: number;
   name: string;
-  image_place: { url: string };
   priority: number;
-  city: {
-    id: number;
-    name: string;
-    state: string;
-  };
-  category: {
-    name: string;
-  };
-  adress: {
+  urlimage: string;
+  average: number;
+  adressdata: {
     id: number;
     street: string;
     number: number;
     neighborhood: string;
+  };
+  categorydata: {
+    name: string;
+  };
+  citydata: {
+    id: number;
+    name: string;
+    state: string;
   };
 }
 

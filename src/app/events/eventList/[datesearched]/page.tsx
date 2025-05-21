@@ -1,5 +1,6 @@
 "use client";
 
+import createApiInstance from "@/api/api";
 import api from "@/api/api";
 import EventCard from "@/components/cards/EventCard";
 import CityIdStoraged from "@/components/cityIdStoraged/CityIdStoraged";
@@ -22,6 +23,7 @@ const eventList = ({ params }: Props) => {
   const [events, setEvents] = useState<EventShortData[]>([]);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const cityId = useCityStorage().cityId;
+  const api = createApiInstance();
 
   async function getEvents() {
     try {

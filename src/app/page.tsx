@@ -30,14 +30,14 @@ export default function Home() {
     [cityId];
 
   return (
-    <main className="flex flex-col px-16 pt-8">
-      <input
+    <main className="flex flex-col px-16 pt-4">
+      {/* <input
         type="text"
         id="principal"
         className="border-green border-spacing-4 rounded-full border-2 border-solid border-black px-4 py-4 shadow-md shadow-gray-500"
         placeholder="Pesquisar Festas e Locais"
-      />
-      <div className="my-8 flex flex-col space-y-5">
+      /> */}
+      <div className="my-4 flex flex-col space-y-5">
         <Link
           href={{
             pathname: "./events/eventDate",

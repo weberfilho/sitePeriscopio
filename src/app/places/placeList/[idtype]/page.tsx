@@ -1,32 +1,55 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-
 import PlaceCard from "@/components/cards/PlaceCard";
-
-import { useCityStorage } from "@/storage/city";
+import * as zod from "zod";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { PlaceShortData } from "@/interfaces/place";
-
-import api from "@/api/api";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
 import createApiInstance from "@/api/api";
+import Menu from "@/components/orderMenu/Menu";
+import MenuTest from "@/components/orderMenuTest/MenuTest";
+import { useCityStorage } from "@/storage/city";
 
 interface Props {
   params: { idtype: number };
 }
+type formData = {
+  place: string;
+};
+
+const validationSchema = zod.object({
+  place: zod.string().min(3, { message: "Digite no minimo três caracteres" }),
+});
+
+var orderType = 1;
 
 const PlaceList = ({ params }: Props) => {
-  const [places, setPlaces] = useState<PlaceShortData[]>([]);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [places, setPlaces] = useState<PlaceShortData[]>([]);
+  const [filteredPlaces, setFilteredPlaces] = useState<PlaceShortData[]>([]);
+  const [placesByDistance, setPlacesByDistance] = useState<PlaceShortData[]>(
+    [],
+  );
+
+  const [showMenu, setShowMenu] = useState(false);
   const cityId = useCityStorage().cityId;
   const api = createApiInstance();
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<formData>({ resolver: zodResolver(validationSchema) });
 
   async function getPlaces() {
     try {
-      const { data, status } = await api.get("places", {
+      const { data, status } = await api.get("testelocalenota", {
         params: {
           city_id: cityId,
           category_id: params.idtype,
@@ -34,6 +57,7 @@ const PlaceList = ({ params }: Props) => {
       });
       if (status === 200) {
         setPlaces(data);
+        // console.log("Ordenacao por Destaque:", data);
         if (data.length === 0) {
           setIsPopUpVisible(true);
         }
@@ -44,15 +68,153 @@ const PlaceList = ({ params }: Props) => {
     }
   }
 
+  async function getPlacesByDistance() {
+    //-19.9251586558056, -43.946656104596414
+    try {
+      const { data, status } = await api.get("placebydistance", {
+        params: {
+          city_id: cityId,
+          category_id: params.idtype,
+          coordinates: { lat: -19.9251586558056, lng: -43.946656104596414 },
+        },
+      });
+      if (status === 200) {
+        setPlacesByDistance(data);
+        // console.log("placesByDistance", placesByDistance);
+        if (data.length === 0) {
+          setIsPopUpVisible(true);
+        }
+      }
+    } catch (error) {
+      console.error("Erro getPlacesByDistance:", error);
+    } finally {
+    }
+  }
+
+  function handleSort(sortType: number) {
+    if (sortType == 1) {
+      orderType = sortType;
+      setPlaces(
+        places.sort((a, b) => {
+          return a.priority - b.priority;
+        }),
+      );
+      // setOrderType(sortType);
+
+      console.log("Ordenacao por Destaques pos: ", places);
+      setShowMenu(false);
+    }
+    if (sortType == 2) {
+      orderType = sortType;
+      getPlacesByDistance();
+      console.log("Ordenacao por Mais proximos: ", places);
+      setShowMenu(false);
+      // setOrderType(sortType);
+    }
+    if (sortType == 3) {
+      orderType = sortType;
+      setPlaces(
+        places.sort((a, b) => {
+          return b.average - a.average;
+        }),
+      );
+      // setOrderType(sortType);
+      console.log("Ordenaçaõ por Melhor Avaliados: ", places);
+      setShowMenu(false);
+    }
+  }
+
   useEffect(() => {
     getPlaces();
   }, [cityId]);
 
+   useEffect(() => {
+      const searchTerm = watch("place");
+      if (searchTerm.length >= 3) {
+        const filtered = places.filter((element) =>
+          element.name.toLowerCase().startsWith(searchTerm.toLowerCase()),
+        );
+        setFilteredPlaces(filtered);
+        // filteredCities = filtered;
+        setShowSuggestions(true);
+      } else {
+        setShowSuggestions(false);
+      }
+    }, [watch("place")]);
+
   return (
-    <div className="flex-1">
-      <h1 className="p-4 text-center font-serif text-4xl font-bold italic">
-        {places[0]?.category.name}
-      </h1>
+    <div className="flex flex-col items-center">
+      {/* <input
+        type="text"
+        id="principal"
+        className="border-green w-fit border-spacing-4 rounded-full border-2 border-solid border-black px-6 py-3 shadow-md shadow-gray-500"
+        placeholder="Pesquisar nome do local"
+      /> */}
+
+      <Controller
+        name="place"
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <input
+            type="text"
+            id="principal"
+            onChange={onChange}
+            onBlur={onBlur}
+            value={value}
+            className="border-green w-fit border-spacing-4 rounded-full border-2 border-solid border-black px-6 py-3 shadow-md shadow-gray-500"
+            placeholder="Pesquisar nome do local"
+          />
+        )}
+      />
+
+      {showSuggestions && ""}
+
+      <div className="mt-4 flex w-full flex-row justify-between">
+        <h1 className="ml-16 font-serif text-4xl font-bold italic">
+          {places[0]?.categorydata.name}
+        </h1>
+        <img
+          src="/order.ico"
+          className="mr-8 h-6 w-6 place-self-end border-2"
+          alt="imagem"
+          onClick={() => setShowMenu(!showMenu)}
+        />
+      </div>
+      {showMenu && <MenuTest sort={handleSort} />}
+      {orderType == 2 ? (
+        <ul className="mt-2">
+          {placesByDistance.map((place) => (
+            <li key={place.id} className="mx-2">
+              <Link href={`../../places/placeDetail/${place.id}`}>
+                <PlaceCard
+                  name={place.name}
+                  neighborhood={place.adressdata.neighborhood}
+                  city={place.citydata.name}
+                  uf={place.citydata.state}
+                  urlImage={`https://x8ki-letl-twmt.n7.xano.io${place.urlimage}`}
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul className="mt-2">
+          {places.map((place) => (
+            <li key={place.id} className="mx-2">
+              <Link href={`../../places/placeDetail/${place.id}`}>
+                <PlaceCard
+                  name={place.name}
+                  neighborhood={place.adressdata.neighborhood}
+                  city={place.citydata.name}
+                  uf={place.citydata.state}
+                  urlImage={`https://x8ki-letl-twmt.n7.xano.io${place.urlimage}`}
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+
       {isPopUpVisible && (
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage
@@ -61,22 +223,6 @@ const PlaceList = ({ params }: Props) => {
           />
         </PopUp>
       )}
-
-      <ul>
-        {places.map((place) => (
-          <li key={place.id} className="mx-2">
-            <Link href={`../../places/placeDetail/${place.id}`}>
-              <PlaceCard
-                name={place.name}
-                neighborhood={place.adress.neighborhood}
-                city={place.city.name}
-                uf={place.city.state}
-                urlImage={place?.image_place.url}
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
