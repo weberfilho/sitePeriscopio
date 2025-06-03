@@ -1,14 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
+import createApiInstance from "@/api/api";
+import { useCityStorage } from "@/storage/city";
+
 import * as zod from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import api from "@/api/api";
-import { useCityStorage } from "@/storage/city";
-import City from "@/interfaces/city";
+
 import Button from "../button/Button";
-import createApiInstance from "@/api/api";
+
+import City from "@/interfaces/city";
 
 type formData = {
   city: string;
@@ -23,20 +26,19 @@ export const CitiesMenu = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm<formData>({ resolver: zodResolver(validationSchema) });
 
   const [cities, setCities] = useState<City[]>([]);
-  // const [filteredCities, setFilteredCities] = useState<City[]>([]);
-  // let filteredCities: City[] = [];
   const searchTerm = watch("city");
   const filteredCities =
-    searchTerm.length && searchTerm.length >= 3
+    searchTerm?.length >= 3
       ? cities.filter((city) =>
           city.name.toLowerCase().startsWith(searchTerm.toLowerCase()),
         )
       : [];
-  const [showSuggestions, setShowSuggestions] = useState(false);
+
   const { setCity } = useCityStorage();
 
   const api = createApiInstance();
@@ -60,20 +62,6 @@ export const CitiesMenu = () => {
     getCities();
   }, []);
 
-  // useEffect(() => {
-  //   // const searchTerm = watch("city");
-  //   if (searchTerm.length >= 3) {
-  //     const filtered = cities.filter((city) =>
-  //       city.name.toLowerCase().startsWith(searchTerm.toLowerCase()),
-  //     );
-  //     setFilteredCities(filtered);
-  //     // filteredCities = filtered;
-  //     setShowSuggestions(true);
-  //   } else {
-  //     setShowSuggestions(false);
-  //   }
-  // }, [watch("city"), cities]);
-
   return (
     <div className="h-full rounded-lg border-4 border-roxo2 bg-slate-50">
       <div className="flex w-full flex-col items-center">
@@ -95,21 +83,19 @@ export const CitiesMenu = () => {
           <div className="flex flex-row justify-between">
             <input
               {...register("city")}
-              onFocus={() => setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
               className="w-9/12 border-2 border-black"
             />
 
             <Button title="OK" padding="p-1" width="w-2/12" />
           </div>
-          {filteredCities.length && filteredCities.length > 0 && (
+          {filteredCities?.length > 0 && (
             <ul>
               {filteredCities.map((city: City) => (
                 <li
                   key={city.id}
                   onClick={() => {
                     setCity(city.id, city.name);
-                    setShowSuggestions(false);
+                    reset();
                   }}
                 >
                   {city.name}
