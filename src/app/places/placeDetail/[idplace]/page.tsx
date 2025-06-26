@@ -99,13 +99,13 @@ const placeDetail = ({ params }: Props) => {
             <Button title="AGENDA" />
           </Link>
           <Link href={`place?.url_contact`}>
-            <Button title="FOTOS" />
+            <Button title="CONTATO" />
           </Link>
           <Link href={`/places/placeComents/${place.id}`}>
             <Button title="AVALIAÇÕES" />
           </Link>
           <Link href={`place?.url_contact`}>
-            <Button title="CONTATO" />
+            <Button title="UBER" />
           </Link>
         </div>
       )}

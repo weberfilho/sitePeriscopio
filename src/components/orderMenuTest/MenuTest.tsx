@@ -22,7 +22,7 @@ const MenuTest = ({ sort }: Props) => {
 
       <div className="mx-2 w-fit">
         <ul className="w-fit">
-          <li className="font-bold" onClick={() => sort(1)}>
+          <li className="w-fit font-bold" onClick={() => sort(1)}>
             Ordenar por:
           </li>
           <li

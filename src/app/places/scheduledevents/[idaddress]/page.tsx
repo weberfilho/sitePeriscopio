@@ -48,13 +48,13 @@ const ScheduledEvents = ({ params }: Props) => {
         Eventos Agendados
       </h1>
       {isPopUpVisible && (
-          <PopUp isVisible={isPopUpVisible}>
-            <PopUpMessage
-              text="Não existem eventos cadastrados para esta estabelecimento"
-              action={() => setIsPopUpVisible(false)}
-            />
-          </PopUp>
-        )}
+        <PopUp isVisible={isPopUpVisible}>
+          <PopUpMessage
+            text="Não existem eventos cadastrados para esta estabelecimento"
+            action={() => setIsPopUpVisible(false)}
+          />
+        </PopUp>
+      )}
 
       <ul>
         {eventList.map((event) => (
@@ -64,7 +64,7 @@ const ScheduledEvents = ({ params }: Props) => {
                 name={event.name}
                 local={event.local_name}
                 startDate={event.start_date}
-                urlImage="https://images.sympla.com.br/61f187a3d8cb3-xs.jpg"
+                urlImage={event.event_image?.url}
               />
             </Link>
           </li>

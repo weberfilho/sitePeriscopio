@@ -10,9 +10,11 @@ import { PlaceShortData } from "@/interfaces/place";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
 import createApiInstance from "@/api/api";
-import Menu from "@/components/orderMenu/Menu";
+
 import MenuTest from "@/components/orderMenuTest/MenuTest";
 import { useCityStorage } from "@/storage/city";
+import { lightFormat } from "date-fns";
+import { link } from "fs";
 
 interface Props {
   params: { idtype: number };
@@ -32,11 +34,13 @@ const PlaceList = ({ params }: Props) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [places, setPlaces] = useState<PlaceShortData[]>([]);
   const [filteredPlaces, setFilteredPlaces] = useState<PlaceShortData[]>([]);
+
   const [placesByDistance, setPlacesByDistance] = useState<PlaceShortData[]>(
     [],
   );
 
   const [showMenu, setShowMenu] = useState(false);
+
   const cityId = useCityStorage().cityId;
   const api = createApiInstance();
   const {
@@ -99,15 +103,13 @@ const PlaceList = ({ params }: Props) => {
           return a.priority - b.priority;
         }),
       );
-      // setOrderType(sortType);
 
-      console.log("Ordenacao por Destaques pos: ", places);
       setShowMenu(false);
     }
     if (sortType == 2) {
       orderType = sortType;
       getPlacesByDistance();
-      console.log("Ordenacao por Mais proximos: ", places);
+
       setShowMenu(false);
       // setOrderType(sortType);
     }
@@ -118,8 +120,7 @@ const PlaceList = ({ params }: Props) => {
           return b.average - a.average;
         }),
       );
-      // setOrderType(sortType);
-      console.log("Ordenaçaõ por Melhor Avaliados: ", places);
+
       setShowMenu(false);
     }
   }
@@ -128,54 +129,51 @@ const PlaceList = ({ params }: Props) => {
     getPlaces();
   }, [cityId]);
 
-   useEffect(() => {
-      const searchTerm = watch("place");
-      if (searchTerm.length >= 3) {
-        const filtered = places.filter((element) =>
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("entrou");
+    let searchTerm = event.target.value;
+    if (searchTerm?.length >= 3) {
+      setFilteredPlaces(
+        places.filter((element) =>
           element.name.toLowerCase().startsWith(searchTerm.toLowerCase()),
-        );
-        setFilteredPlaces(filtered);
-        // filteredCities = filtered;
-        setShowSuggestions(true);
-      } else {
-        setShowSuggestions(false);
-      }
-    }, [watch("place")]);
+        ),
+      );
+      setShowSuggestions(true);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center">
-      {/* <input
+      <input
         type="text"
-        id="principal"
+        onChange={handleChange}
         className="border-green w-fit border-spacing-4 rounded-full border-2 border-solid border-black px-6 py-3 shadow-md shadow-gray-500"
-        placeholder="Pesquisar nome do local"
-      /> */}
-
-      <Controller
-        name="place"
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <input
-            type="text"
-            id="principal"
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-            className="border-green w-fit border-spacing-4 rounded-full border-2 border-solid border-black px-6 py-3 shadow-md shadow-gray-500"
-            placeholder="Pesquisar nome do local"
-          />
-        )}
       />
+      {showSuggestions && (
+        <ul>
+          {filteredPlaces.map((element) => (
+            <Link href={`../../places/placeDetail/${element.id}`}>
+              <li
+                className="rounded-sm border-2 border-black px-2 hover:bg-red-400 focus:bg-yellow-500"
+                key={element.id}
+              >
+                {element.name}
+              </li>
+            </Link>
+          ))}
+        </ul>
+      )}
 
-      {showSuggestions && ""}
-
-      <div className="mt-4 flex w-full flex-row justify-between">
-        <h1 className="ml-16 font-serif text-4xl font-bold italic">
+      <div className="flex w-full items-center justify-between p-4">
+        <h1 className="mx-auto font-serif text-4xl font-bold italic">
           {places[0]?.categorydata.name}
         </h1>
+
         <img
           src="/order.ico"
-          className="mr-8 h-6 w-6 place-self-end border-2"
+          className="h-6 w-6 cursor-pointer border-2"
           alt="imagem"
           onClick={() => setShowMenu(!showMenu)}
         />

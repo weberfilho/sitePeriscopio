@@ -1,9 +1,9 @@
-import React from 'react'
+// import React from 'react'
 
-const SearchMenu = () => {
-  return (
-    <div>SearchMenu</div>
-  )
-}
+// const SearchMenu = () => {
+//   return (
+//     <div>SearchMenu</div>
+//   )
+// }
 
-export default SearchMenu
+// export default SearchMenu
