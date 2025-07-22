@@ -4,7 +4,7 @@ import Button from "@/components/button/Button";
 
 import { SentComment, ShortDataComment } from "@/interfaces/comment";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PopUp from "@/components/popup/Popup";
@@ -20,6 +20,7 @@ const Assessment = ({ params }: Props) => {
   const [score, setScore] = useState(0);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
+  const [showInitialPopUp, setShowInitialPopUp] = useState(false);
   const {
     register,
     handleSubmit,
@@ -34,6 +35,11 @@ const Assessment = ({ params }: Props) => {
 
   const api = createApiInstance();
   const { userId } = useUserStorage();
+  function checkLogin() {
+    userId == null ? setShowInitialPopUp(true) : setShowInitialPopUp(false);
+  }
+
+  useEffect(() => checkLogin(), [userId]);
 
   const onSubmit: SubmitHandler<ShortDataComment> = async (data) => {
     try {
@@ -83,6 +89,15 @@ const Assessment = ({ params }: Props) => {
           <Button title="ENVIAR" type="submit" />
         </div>
       </form>
+      {showInitialPopUp && (
+        <PopUp isVisible={showInitialPopUp}>
+          <PopUpMessage
+            text="Para fazer comentários é necessário estar logado"
+            action={() => setShowInitialPopUp(false)}
+          />
+        </PopUp>
+      )}
+
       {isPopUpVisible && requestSuccess ? (
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage

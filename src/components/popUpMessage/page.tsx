@@ -9,7 +9,7 @@ type Props = {
 
 const PopUpMessage = ({ text, action }: Props) => {
   return (
-    <div className="flex h-4/5 flex-col items-center rounded-lg border-4 border-roxo2 bg-slate-50">
+    <div className="fixed left-1/2 top-1/2 flex h-fit w-[360px] -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-lg border-4 border-roxo2 bg-slate-50">
       <div className="flex h-fit w-full flex-col items-center">
         <img src="/logoPeriscopio.jpg" className="mt-4 w-32" alt="imagem" />
       </div>

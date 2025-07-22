@@ -72,14 +72,15 @@ const PlaceList = ({ params }: Props) => {
     }
   }
 
-  async function getPlacesByDistance() {
+  async function orderPlacesByDistance(lat: number, long: number) {
     //-19.9251586558056, -43.946656104596414
+
     try {
       const { data, status } = await api.get("placebydistance", {
         params: {
           city_id: cityId,
           category_id: params.idtype,
-          coordinates: { lat: -19.9251586558056, lng: -43.946656104596414 },
+          coordinates: { lat: lat, lng: long },
         },
       });
       if (status === 200) {
@@ -108,7 +109,19 @@ const PlaceList = ({ params }: Props) => {
     }
     if (sortType == 2) {
       orderType = sortType;
-      getPlacesByDistance();
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            orderPlacesByDistance(latitude, longitude);
+          },
+          (err) => {
+            // setError(err.message);
+          },
+        );
+      }
 
       setShowMenu(false);
       // setOrderType(sortType);

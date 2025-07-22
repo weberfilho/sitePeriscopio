@@ -22,7 +22,7 @@ export interface EventData {
   start_time: number;
   finish_time: number;
   description: string;
-  url_ticket: string;
+  url_ticket: string | null;
   priority: number;
   event_image: { url: string };
   adress: {

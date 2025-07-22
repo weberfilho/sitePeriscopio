@@ -44,12 +44,13 @@ const placeDetail = ({ params }: Props) => {
   return (
     <div className="content-center px-8">
       <div className="flex flex-col">
-        <h1 className="size-fit self-center font-serif text-4xl font-semibold italic">
+        <h1 className="size-fit self-center font-serif text-3xl font-semibold italic">
           {place?.name}
         </h1>
         <div className="flex flex-row justify-center">
           {average && (
             <Rating
+              size={24}
               initialValue={average}
               readonly
               SVGstyle={{ display: "inline" }}
@@ -87,7 +88,7 @@ const placeDetail = ({ params }: Props) => {
             <Button title="CARDAPIO" />
           </Link>
           <Link href={`/places/placeComents/${place.id}`}>
-            <Button title="AVALIAÇÕES" />
+            <Button title="AVALIACOES" />
           </Link>
           <Link href={`place?.url_contact`}>
             <Button title="CONTATO" />

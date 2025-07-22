@@ -54,8 +54,7 @@ const eventDetail = ({ params }: Props) => {
           setEvent(data);
           DadosFormatados(data);
 
-          console.log("Dados do Event: ", data);
-          console.log("Dados do Event3: ", formattedData);
+          
         }
       } catch (error) {
         console.error("eventDetail error:", error);
@@ -91,7 +90,7 @@ const eventDetail = ({ params }: Props) => {
         {` ${event?.adress?.street}, ${event?.adress?.number} ${event?.adress?.neighborhood} -  ${event?.city?.name} ${event?.city?.state}`}
       </p>
       <div className="mb-8 grid grid-cols-2 gap-4">
-        <Link href="/">
+        <Link href={`${event.url_ticket}`}>
           <Button title="INGRESSOS" />
         </Link>
         <Link href={`../../../events/eventChat/${event.id}`}>
