@@ -8,15 +8,14 @@ type Props = {
   title: string;
   width?: string;
   padding?: string;
-  onClick?: () => any
+  onClick?: () => any;
 };
 
 const Button = ({
   type = "button",
   title,
   width = "w-full",
-  padding = "p-6",
-  
+  padding = "p-4",
 }: Props) => {
   return (
     <button
@@ -26,7 +25,5 @@ const Button = ({
       {title}
     </button>
   );
-
-  
 };
 export default Button;
