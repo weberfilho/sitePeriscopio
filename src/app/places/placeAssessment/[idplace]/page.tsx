@@ -36,6 +36,7 @@ const Assessment = ({ params }: Props) => {
   const api = createApiInstance();
   const { userId } = useUserStorage();
   function checkLogin() {
+    console.log(userId)
     userId == null ? setShowInitialPopUp(true) : setShowInitialPopUp(false);
   }
 

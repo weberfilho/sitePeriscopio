@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header className="mt-10 flex flex-col items-center">
-          <img src="/logoPeriscopio.jpg" className="w-40" alt="imagem" />
+          <img src="/PeriLogo.png" className="w-40" alt="imagem" />
           <CityLabel />
         </header>
         <main className="pb-16">{children}</main>

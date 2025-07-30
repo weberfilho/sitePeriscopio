@@ -3,8 +3,11 @@
 import createApiInstance from "@/api/api";
 import Button from "@/components/button/Button";
 import ChatCard from "@/components/cards/ChatCard";
+import PopUp from "@/components/popup/Popup";
+import PopUpMessage from "@/components/popUpMessage/page";
 
 import { ReceiveidMessage, ShortDataMessage } from "@/interfaces/chatmessage";
+import { useUserStorage } from "@/storage/user";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -14,6 +17,8 @@ interface Props {
 
 const EventChat = ({ params }: Props) => {
   const [messages, setMessages] = useState<ReceiveidMessage[]>([]);
+  const [showInitialPopUp, setShowInitialPopUp] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -22,6 +27,10 @@ const EventChat = ({ params }: Props) => {
   } = useForm<any>();
 
   const api = createApiInstance();
+  const { userId } = useUserStorage();
+  function checkLogin() {
+    userId == null ? setShowInitialPopUp(true) : setShowInitialPopUp(false);
+  }
 
   async function getChatMessages() {
     try {
@@ -43,11 +52,12 @@ const EventChat = ({ params }: Props) => {
   useEffect(() => {
     getChatMessages();
   }, []);
+  useEffect(() => checkLogin(), [userId]);
 
   const onSubmit: SubmitHandler<ShortDataMessage> = async (data) => {
     try {
       const response = await api.post("postmessage", {
-        user_id: 1,
+        user_id: userId,
         text: data.textmessage,
         event_id: params.idevent,
       });
@@ -101,6 +111,14 @@ const EventChat = ({ params }: Props) => {
 
         <Button title="OK" type="submit" width="w-12" padding="p-2" />
       </form>
+      {showInitialPopUp && (
+        <PopUp isVisible={showInitialPopUp}>
+          <PopUpMessage
+            text="Para participar do chat é necessário estar logado"
+            action={() => setShowInitialPopUp(false)}
+          />
+        </PopUp>
+      )}
     </div>
   );
 };

@@ -2,6 +2,8 @@
 
 import createApiInstance from "@/api/api";
 import api from "@/api/api";
+import PopUp from "@/components/popup/Popup";
+import PopUpMessage from "@/components/popUpMessage/page";
 
 import React, { useEffect, useState } from "react";
 
@@ -31,12 +33,13 @@ const PlacePictures = ({ params }: Props) => {
         setImages(data.pictures);
         setNamePlace(data.place.name);
         console.log("Data", data);
-        if (data.length === 0) {
+        if (data.pictures.length === 0 || data === null) {
           setIsPopUpVisible(true);
         }
       }
     } catch (error) {
       console.error("Erro getPictures:", error);
+      setIsPopUpVisible(true);
     } finally {
     }
   }
@@ -76,6 +79,14 @@ const PlacePictures = ({ params }: Props) => {
           </div>
         ))}
       </div>
+      {isPopUpVisible && (
+        <PopUp isVisible={isPopUpVisible}>
+          <PopUpMessage
+            text="Não existem fotos cadastradas para este local"
+            action={() => setIsPopUpVisible(false)}
+          />
+        </PopUp>
+      )}
     </div>
   );
 };

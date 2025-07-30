@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -34,9 +34,29 @@ const SignIn = () => {
 
   const api = createApiInstance();
   const router = useRouter();
+  const [hasToken, setHasToken] = useState<String>("");
 
   const { setToken } = useTokenStorage();
   const { setUserData } = useUserStorage();
+
+  // async function getUserData() {
+  //   const { status, data: userData } = await api.get("auth/me");
+  //   if (status === 200 && !!userData) {
+  //     console.log("Data:", userData);
+  //     setUserData(userData.id, userData.name);
+  //     router.push("/");
+  //   }
+  // }
+  const getUserData = async () => {
+    const { status, data } = await api.get("auth/me");
+    if (status === 200 && !!data) {
+      console.log("Data:", data);
+      setUserData(data.id, data.name);
+    }
+  };
+  // useMemo(() => {
+  //   getUserData;
+  // }, [hasToken]);
 
   const handleLogin: SubmitHandler<SignInData> = async (formData) => {
     try {
@@ -47,8 +67,9 @@ const SignIn = () => {
       if (status === 200) {
         console.log("voce esta logado");
         setToken(data.authToken);
+        // setHasToken(data.authToken);
         const { status, data: userData } = await api.get("auth/me");
-        if (status === 200 && !!userData) {
+        if (status === 200 && userData) {
           console.log("Data:", userData);
           setUserData(userData.id, userData.name);
           router.push("/");

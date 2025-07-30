@@ -16,27 +16,25 @@ export default function Home() {
   const { cityId } = useCityStorage();
 
   console.log("cityId", cityId);
+  function checkCity(cityId: number | null) {
+    if (cityId === null) {
+      setIsPopUpVisible(true);
+    } else {
+      setIsPopUpVisible(false);
+    }
+  }
 
   useEffect(() => {
-    function checkCity(cityId: number | null) {
-      if (cityId === null) {
-        setIsPopUpVisible(true);
-      } else {
-        setIsPopUpVisible(false);
-      }
-    }
     checkCity(cityId);
-  }),
-    [cityId];
+  }, [cityId]);
 
   return (
     <main className="flex flex-col px-16 pt-4">
-      
       <div className="mb-6 mt-2 flex flex-col space-y-5">
         <Link
           href={{
             pathname: "./events/eventDate",
-            query: { userId: 1, city: cityId },
+            // query: { userId: 1, city: cityId },
           }}
         >
           <Button title="FESTAS E EVENTOS" />

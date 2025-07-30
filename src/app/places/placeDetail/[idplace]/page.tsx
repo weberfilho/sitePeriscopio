@@ -69,8 +69,8 @@ const placeDetail = ({ params }: Props) => {
 
       <p className="mt-1 py-4">{place?.description}</p>
 
-      <p className="pb-4">
-        Endereço:
+      <p className="pb-4 italic">
+        <strong className="font-bold italic">Endereço:</strong>
         {` ${place?.adress?.street}, ${place?.adress?.number} ${place?.adress?.neighborhood} -  ${place?.city?.name} ${place?.city?.state}`}
       </p>
       {place.category_id === 1 || place.category_id === 2 ? (

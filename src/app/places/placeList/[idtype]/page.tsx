@@ -13,8 +13,6 @@ import createApiInstance from "@/api/api";
 
 import MenuTest from "@/components/orderMenuTest/MenuTest";
 import { useCityStorage } from "@/storage/city";
-import { lightFormat } from "date-fns";
-import { link } from "fs";
 
 interface Props {
   params: { idtype: number };
@@ -34,7 +32,6 @@ const PlaceList = ({ params }: Props) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [places, setPlaces] = useState<PlaceShortData[]>([]);
   const [filteredPlaces, setFilteredPlaces] = useState<PlaceShortData[]>([]);
-
   const [placesByDistance, setPlacesByDistance] = useState<PlaceShortData[]>(
     [],
   );
@@ -61,7 +58,7 @@ const PlaceList = ({ params }: Props) => {
       });
       if (status === 200) {
         setPlaces(data);
-        // console.log("Ordenacao por Destaque:", data);
+
         if (data.length === 0) {
           setIsPopUpVisible(true);
         }
@@ -73,8 +70,6 @@ const PlaceList = ({ params }: Props) => {
   }
 
   async function orderPlacesByDistance(lat: number, long: number) {
-    //-19.9251586558056, -43.946656104596414
-
     try {
       const { data, status } = await api.get("placebydistance", {
         params: {
@@ -85,7 +80,7 @@ const PlaceList = ({ params }: Props) => {
       });
       if (status === 200) {
         setPlacesByDistance(data);
-        // console.log("placesByDistance", placesByDistance);
+
         if (data.length === 0) {
           setIsPopUpVisible(true);
         }
@@ -124,7 +119,6 @@ const PlaceList = ({ params }: Props) => {
       }
 
       setShowMenu(false);
-      // setOrderType(sortType);
     }
     if (sortType == 3) {
       orderType = sortType;
@@ -185,8 +179,8 @@ const PlaceList = ({ params }: Props) => {
         </h1>
 
         <img
-          src="/order.ico"
-          className="h-6 w-6 cursor-pointer border-2"
+          src="/faders.svg"
+          className="h-6 w-6 cursor-pointer"
           alt="imagem"
           onClick={() => setShowMenu(!showMenu)}
         />

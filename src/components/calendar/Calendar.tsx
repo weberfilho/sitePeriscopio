@@ -27,24 +27,33 @@ const Calendar = ({ action }: Props) => {
   };
 
   return (
-    <div className="flex h-full flex-col rounded-lg border-4 border-roxo2 bg-slate-50">
+    // <div className="flex h-full flex-col items-center rounded-lg border-4 border-roxo2 bg-slate-50">
+    <div className="fixed left-1/2 top-1/2 flex h-fit w-[360px] -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-lg border-2 border-roxo2 bg-slate-50">
       <div className="flex w-full flex-col items-center">
         <img src="/logoPeriscopio.jpg" className="mt-4 w-32" alt="imagem" />
       </div>
 
-      <span className="ml-4 mt-8">Selecione a data do evento: </span>
-      <div className="mb-52 ml-4 mr-8 flex flex-row justify-between">
-        <DatePicker
-          className="min-h-8 rounded-md border-2 border-solid border-black"
-          selected={selectedDate}
-          onSelect={handleDataChange}
-          dateFormat={"dd/MM/yyyy"}
-        />
+      <span className="mb-6 ml-4 mt-8 font-serif text-xl font-bold italic text-verde">
+        Selecione a data do evento:
+      </span>
+      {/* <div className="mb-52 flex w-3/5 flex-col justify-center"> */}
+      <DatePicker
+        className="min-h-8 w-fit rounded-md border-2 border-solid border-black"
+        selected={selectedDate}
+        onSelect={handleDataChange}
+        dateFormat={"dd/MM/yyyy"}
+        inline
+        locale={ptBR}
+      />
 
-        <Link href={`../../events/eventList/${parameterDate}`} onClick={action}>
-          <Button title="OK" width="20" padding="p-2" />
-        </Link>
-      </div>
+      <Link
+        href={`../../events/eventList/${parameterDate}`}
+        onClick={action}
+        className="mb-4 mt-8"
+      >
+        <Button title="OK" width="20" padding="p-2" />
+      </Link>
+      {/* </div> */}
     </div>
   );
 };
