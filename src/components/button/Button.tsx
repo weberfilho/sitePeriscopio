@@ -16,12 +16,12 @@ const Button = ({
   title,
   width = "w-full",
   padding = "px-2 py-6",
-  click = () => {}
+  // click = () => {}
 }: Props) => {
   return (
     <button
       type={type}
-      className={`rounded-xl bg-gradient-to-br from-roxo2 via-cyan-700 to-verde text-xl text-white ${width} ${padding}`} onClick={click}
+      className={`rounded-xl bg-gradient-to-br from-roxo2 via-cyan-700 to-verde text-xl text-white ${width} ${padding}`} 
     >
       {title}
     </button>
