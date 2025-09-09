@@ -21,6 +21,7 @@ const EventChat = ({ params }: Props) => {
 
   const {
     register,
+    reset,
     handleSubmit,
     watch,
     formState: { errors },
@@ -70,6 +71,7 @@ const EventChat = ({ params }: Props) => {
     } catch (error) {
       console.error("Erro postMessage:", error);
     } finally {
+      reset();
     }
   };
 

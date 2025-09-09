@@ -65,7 +65,7 @@ export const CitiesMenu = () => {
   return (
     <div className="h-full rounded-lg border-4 border-roxo2 bg-slate-50">
       <div className="flex w-full flex-col items-center">
-        <img src="/logoPeriscopio.jpg" className="mt-4 w-32" alt="imagem" />
+        <img src="/periLogo.png" className="mt-4 w-32" alt="imagem" />
       </div>
       <p className="text-lgf bold pb-2 text-center font-sans font-semibold italic">
         Fun Guide

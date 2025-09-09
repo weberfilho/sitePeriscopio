@@ -11,6 +11,8 @@ import { PlaceData } from "@/interfaces/place";
 
 import api from "@/api/api";
 import createApiInstance from "@/api/api";
+import PopUp from "@/components/popup/Popup";
+import PopUpMessage from "@/components/popUpMessage/page";
 
 interface Props {
   params: { idplace: number };
@@ -19,6 +21,7 @@ interface Props {
 const placeDetail = ({ params }: Props) => {
   const [place, setPlace] = useState<PlaceData>({} as PlaceData);
   const [average, setAverage] = useState(0);
+  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const api = createApiInstance();
 
   useEffect(() => {
@@ -66,6 +69,14 @@ const placeDetail = ({ params }: Props) => {
           <p className="text-md flex flex-row px-4">{place?.niver_promo}</p>
         </div>
       )}
+      {isPopUpVisible && (
+        <PopUp isVisible={isPopUpVisible}>
+          <PopUpMessage
+            text="Serviço indisponível para este evento"
+            action={() => setIsPopUpVisible(false)}
+          />
+        </PopUp>
+      )}
 
       <p className="mt-1 py-4">{place?.description}</p>
 
@@ -81,33 +92,86 @@ const placeDetail = ({ params }: Props) => {
           <Link href={`/places/placepictures/${place.id}`}>
             <Button title="FOTOS" />
           </Link>
-          <Link href={`place?.url_contact`}>
+          {/* <Link href={`place?.url_contact`}>
             <Button title="JUCKEBOX" />
-          </Link>
-          <Link href={`place?.url_contact`}>
+          </Link> */}
+          <div
+            onClick={() => {
+              place.url_juckebox
+                ? window.open(`https://${place.url_juckebox}`, "_blank")
+                : setIsPopUpVisible(true);
+            }}
+          >
+            <Button title="JUCKEBOX" />
+          </div>
+          {/* <Link href={`place?.url_contact`}>
             <Button title="CARDAPIO" />
-          </Link>
-          <Link href={`/places/placeComents/${place.id}`}>
-            <Button title="AVALIACOES" />
-          </Link>
-          <Link href={`place?.url_contact`}>
-            <Button title="CONTATO" />
-          </Link>
-        </div>
-      ) : (
-        <div className="mb-8 grid grid-cols-2 gap-4">
-          <Link href={`../../places/scheduledevents/${place.adress_id}`}>
-            <Button title="AGENDA" />
-          </Link>
-          <Link href={`place?.url_contact`}>
-            <Button title="CONTATO" />
-          </Link>
+          </Link> */}
+          <div
+            onClick={() => {
+              place.url_menu
+                ? window.open(`https://${place.url_menu}`, "_blank")
+                : setIsPopUpVisible(true);
+            }}
+          >
+            <Button title="CARDAPIO" />
+          </div>
           <Link href={`/places/placeComents/${place.id}`}>
             <Button title="AVALIAÇÕES" />
           </Link>
-          <Link href={`place?.url_contact`}>
-            <Button title="UBER" />
+          {/* <Link href={`place?.url_contact`}>
+            <Button title="CONTATO" />
+          </Link> */}
+          <div
+            onClick={() => {
+              place.url_contact
+                ? window.open(
+                    `
+                  https://wa.me/${place.url_contact}`,
+                    "_blank",
+                  )
+                : setIsPopUpVisible(true);
+            }}
+          >
+            <Button title="CONTATO" />
+          </div>
+        </div>
+      ) : (
+        <div className="mb-8 grid grid-cols-2 gap-4">
+          {/* <Link href={`../../places/scheduledevents/${place.adress_id}`}>
+            <Button title="AGENDA" />
+          </Link> */}
+          <div
+            onClick={() => {
+              place.url_schedule
+                ? window.open(`https://${place.url_schedule}`, "_blank")
+                : setIsPopUpVisible(true);
+            }}
+          >
+            <Button title="AGENDA" />
+          </div>
+          {/* <Link href={`place?.url_contact`}>
+            <Button title="CONTATO" />
+          </Link> */}
+          <div
+            onClick={() => {
+              place.url_contact
+                ? window.open(`https://wa.me/${place.url_contact}`, "_blank")
+                : setIsPopUpVisible(true);
+            }}
+          >
+            <Button title="CONTATO" />
+          </div>
+
+          <Link href={`/places/placeComents/${place.id}`}>
+            <Button title="AVALIAÇÕES" />
           </Link>
+          {/* <Link href={`place?.url_contact`}>
+            <Button title="UBER" />
+          </Link> */}
+          <div onClick={() => setIsPopUpVisible(true)}>
+            <Button title="UBER" />
+          </div>
         </div>
       )}
     </div>

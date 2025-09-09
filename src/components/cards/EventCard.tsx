@@ -19,16 +19,16 @@ const EventCard = (props: Evento) => {
           {/* <h3 className='inline font-bold text-lg '>Bairro: </h3> */}
           <img
             src="/city.ico"
-            className="h-6 w-5 self-center pt-2"
+            className="h-7 w-6 self-center pt-2"
             alt="imagem"
           />
-          <p className="mt-2 inline text-lg italic">{`${"  "} ${props.local}`}</p>
+          <p className="mt-2 inline text-lg italic">{`${"   "} ${props.local}`}</p>
         </div>
         <div className="flex flex-row">
           {/* <h3 className='inline font-bold text-lg '>Bairro: </h3> */}
           <img
-            src="/calendar.jpg"
-            className="h-6 w-5 self-center pt-2"
+            src="/calendar.svg"
+            className="h-7 w-6 self-center pt-2"
             alt="imagem"
           />
           <p className="mt-2 inline text-lg italic">{`${"    "} ${props.startDate}`}</p>

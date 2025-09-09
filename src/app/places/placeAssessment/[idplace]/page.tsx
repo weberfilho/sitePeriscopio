@@ -11,12 +11,14 @@ import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
 import createApiInstance from "@/api/api";
 import { useUserStorage } from "@/storage/user";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: { idplace: number };
 }
 
 const Assessment = ({ params }: Props) => {
+  const router = useRouter();
   const [score, setScore] = useState(0);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
@@ -36,7 +38,7 @@ const Assessment = ({ params }: Props) => {
   const api = createApiInstance();
   const { userId } = useUserStorage();
   function checkLogin() {
-    console.log(userId)
+    console.log(userId);
     userId == null ? setShowInitialPopUp(true) : setShowInitialPopUp(false);
   }
 
@@ -83,9 +85,9 @@ const Assessment = ({ params }: Props) => {
           <p className="text-red-700">Este campo deve ser preenchido</p>
         )}
         <div className="mt-16 grid grid-cols-2 gap-8">
-          <Link href="/places/placeDetail/1">
+          <div onClick={() => router.back()}>
             <Button title="CANCELAR" />
-          </Link>
+          </div>
 
           <Button title="ENVIAR" type="submit" />
         </div>

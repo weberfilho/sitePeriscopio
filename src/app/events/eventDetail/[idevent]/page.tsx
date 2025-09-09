@@ -110,19 +110,18 @@ const eventDetail = ({ params }: Props) => {
         </Link>
         <div
           onClick={() => {
-            event.url_ticket
-              ? window.open(`https://wa.me/5531984824093`, "_blank")
+            event.contact_number
+              ? window.open(`https://wa.me/${event.contact_number}`, "_blank")
               : setIsPopUpVisible(true);
           }}
         >
           <Button title="CONTATO" />
         </div>
-        {/* <Link href="/">
-          <Button title="CONTATO" />
-        </Link> */}
-        <Link href="/">
+
+        <div onClick={() => setIsPopUpVisible(true)}>
           <Button title="UBER" />
-        </Link>
+        </div>
+
         {isPopUpVisible && (
           <PopUp isVisible={isPopUpVisible}>
             <PopUpMessage

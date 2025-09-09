@@ -25,7 +25,6 @@ const SuggestionPlace = () => {
   } = useForm<PlaceSuggestion>();
 
   const onSubmit: SubmitHandler<PlaceSuggestion> = async (data) => {
-    
     try {
       const response = await api.post("placesuggestion", data);
       if (response.status === 200) {

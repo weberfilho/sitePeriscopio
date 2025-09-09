@@ -24,6 +24,7 @@ export interface EventData {
   description: string;
   url_ticket: string | null;
   priority: number;
+  contact_number: string;
   event_image: { url: string };
   adress: {
     id: number;
