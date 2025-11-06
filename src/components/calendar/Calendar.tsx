@@ -30,7 +30,7 @@ const Calendar = ({ action }: Props) => {
     // <div className="flex h-full flex-col items-center rounded-lg border-4 border-roxo2 bg-slate-50">
     <div className="fixed left-1/2 top-1/2 flex h-fit w-[360px] -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-lg border-2 border-roxo2 bg-slate-50">
       <div className="flex w-full flex-col items-center">
-        <img src="/logoPeriscopio.jpg" className="mt-4 w-32" alt="imagem" />
+        <img src="/periLogo.png" className="mt-4 w-32" alt="imagem" />
       </div>
 
       <span className="mb-6 ml-4 mt-8 font-serif text-xl font-bold italic text-verde">

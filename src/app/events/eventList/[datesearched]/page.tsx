@@ -3,17 +3,15 @@
 import createApiInstance from "@/api/api";
 import api from "@/api/api";
 import EventCard from "@/components/cards/EventCard";
-import CityIdStoraged from "@/components/cityIdStoraged/CityIdStoraged";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
 import { EventShortData } from "@/interfaces/event";
 import { useCityStorage } from "@/storage/city";
-
 import { format, parseISO } from "date-fns";
-
 import { ptBR } from "date-fns/locale";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: { datesearched: Date };
@@ -24,6 +22,12 @@ const eventList = ({ params }: Props) => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const cityId = useCityStorage().cityId;
   const api = createApiInstance();
+  const router = useRouter();
+
+  function buttonAction() {
+    setIsPopUpVisible(false);
+    router.back();
+  }
 
   async function getEvents() {
     try {
@@ -41,7 +45,7 @@ const eventList = ({ params }: Props) => {
         }
       }
     } catch (error) {
-      console.error("Erro getPlaces:", error);
+      setIsPopUpVisible(true);
     } finally {
     }
   }
@@ -60,7 +64,7 @@ const eventList = ({ params }: Props) => {
           <PopUp isVisible={isPopUpVisible}>
             <PopUpMessage
               text="Não existem eventos cadastrados para esta data"
-              action={() => setIsPopUpVisible(false)}
+              action={() => buttonAction()}
             />
           </PopUp>
         )}

@@ -37,6 +37,11 @@ const Assessment = ({ params }: Props) => {
 
   const api = createApiInstance();
   const { userId } = useUserStorage();
+
+  function auxCheckLogin() {
+    setShowInitialPopUp(false);
+    router.push("/login/signin");
+  }
   function checkLogin() {
     console.log(userId);
     userId == null ? setShowInitialPopUp(true) : setShowInitialPopUp(false);
@@ -96,7 +101,7 @@ const Assessment = ({ params }: Props) => {
         <PopUp isVisible={showInitialPopUp}>
           <PopUpMessage
             text="Para fazer comentários é necessário estar logado"
-            action={() => setShowInitialPopUp(false)}
+            action={() => auxCheckLogin()}
           />
         </PopUp>
       )}

@@ -137,7 +137,7 @@ const PlaceList = ({ params }: Props) => {
   }, [cityId]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("entrou");
+    
     let searchTerm = event.target.value;
     if (searchTerm?.length >= 3) {
       setFilteredPlaces(

@@ -5,11 +5,11 @@ import Button from "@/components/button/Button";
 import ChatCard from "@/components/cards/ChatCard";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
-
 import { ReceiveidMessage, ShortDataMessage } from "@/interfaces/chatmessage";
 import { useUserStorage } from "@/storage/user";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: { idevent: number };
@@ -29,6 +29,13 @@ const EventChat = ({ params }: Props) => {
 
   const api = createApiInstance();
   const { userId } = useUserStorage();
+  const router = useRouter();
+
+  function auxCheckLogin() {
+    setShowInitialPopUp(false);
+    router.push("/login/signin");
+  }
+
   function checkLogin() {
     userId == null ? setShowInitialPopUp(true) : setShowInitialPopUp(false);
   }
@@ -117,7 +124,7 @@ const EventChat = ({ params }: Props) => {
         <PopUp isVisible={showInitialPopUp}>
           <PopUpMessage
             text="Para participar do chat é necessário estar logado"
-            action={() => setShowInitialPopUp(false)}
+            action={() => auxCheckLogin()}
           />
         </PopUp>
       )}
