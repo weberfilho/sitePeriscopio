@@ -37,7 +37,7 @@ export const CitiesMenu = () => {
       ? cities.filter((city) =>
           city.name.toLowerCase().startsWith(searchTerm.toLowerCase()),
         )
-      : [];
+      : cities;
 
   const { setCity } = useCityStorage();
 
@@ -82,7 +82,7 @@ export const CitiesMenu = () => {
           )}
           <div className="flex flex-row justify-between">
             <input
-              {...register("city")}
+              {...register("city")}              
               className="w-9/12 border-2 border-black"
             />
 

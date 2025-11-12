@@ -20,7 +20,7 @@ const SuggestionPlace = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm<PlaceSuggestion>();
 
@@ -38,6 +38,7 @@ const SuggestionPlace = () => {
     } catch (error) {
       console.error("Erro getPlaces:", error);
     } finally {
+      reset();
     }
   };
   return (

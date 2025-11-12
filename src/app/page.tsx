@@ -15,7 +15,6 @@ export default function Home() {
   const [isPopUpVisible, setIsPopUpVisible] = useState(true);
   const { cityId } = useCityStorage();
 
-  console.log("cityId", cityId);
   function checkCity(cityId: number | null) {
     if (cityId === null) {
       setIsPopUpVisible(true);
@@ -34,7 +33,6 @@ export default function Home() {
         <Link
           href={{
             pathname: "./events/eventDate",
-            // query: { userId: 1, city: cityId },
           }}
         >
           <Button title="FESTAS E EVENTOS" />

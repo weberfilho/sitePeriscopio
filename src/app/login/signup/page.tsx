@@ -6,11 +6,7 @@ import { z } from "zod";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-
 import Button from "@/components/button/Button";
-
-import api from "@/api/api";
-
 import { SignUpData } from "@/interfaces/user";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
@@ -26,8 +22,7 @@ const validationData = z.object({
 const SignUp = () => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  let errorMessage = "";
+  const [popUpInfo, setPopUpInfo] = useState({ isVisible: false, message: "" });
 
   const {
     reset,
@@ -57,11 +52,6 @@ const SignUp = () => {
     setValue("birthday", formattedValue);
   };
 
-  const showErrorMessage = (error: string) => {
-    // setHasError(true)
-    errorMessage = error;
-  };
-
   const onSubmit: SubmitHandler<SignUpData> = async (formData) => {
     try {
       const { status, data } = await api.post("auth/signup", {
@@ -81,15 +71,13 @@ const SignUp = () => {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
         if (axiosError.response?.data?.payload) {
-          console.log("Avaliando mensagem", axiosError.response.data.payload);
-          // errorMessage = axiosError.response.data.payload;
-          setHasError(true);
-          showErrorMessage(axiosError.response?.data.payload);
+          setPopUpInfo({
+            isVisible: true,
+            message: axiosError.response.data.payload,
+          });
         }
       }
       console.error("SignUp, onSubmit error:", error);
-      console.error("Mensagem de erro:", error);
-      //to do adicionar mensagem de erro
     } finally {
       reset();
     }
@@ -168,9 +156,12 @@ const SignUp = () => {
           />
         </PopUp>
       )}
-      {hasError && (
-        <PopUp isVisible={hasError}>
-          <PopUpMessage text={errorMessage} action={() => setHasError(false)} />
+      {popUpInfo.isVisible && (
+        <PopUp isVisible={popUpInfo.isVisible}>
+          <PopUpMessage
+            text={popUpInfo.message}
+            action={() => setPopUpInfo({ isVisible: false, message: "" })}
+          />
         </PopUp>
       )}
     </div>
