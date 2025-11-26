@@ -15,3 +15,10 @@ export interface ReceiveidMessage {
 export interface ShortDataMessage {
   textmessage: string;
 }
+
+export interface ChatData {
+  id: number;
+  date: Date;
+  userName: string;
+  message: string;
+}
