@@ -1,7 +1,6 @@
 "use client";
 
 import createApiInstance from "@/api/api";
-import api from "@/api/api";
 import Button from "@/components/button/Button";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
@@ -12,7 +11,6 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 const SuggestionPlace = () => {
-  const [placeSuggested, setPlaceSuggested] = useState<PlaceSuggestion>();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
   const api = createApiInstance();
@@ -28,7 +26,6 @@ const SuggestionPlace = () => {
     try {
       const response = await api.post("placesuggestion", data);
       if (response.status === 200) {
-        setPlaceSuggested(data);
         setIsPopUpVisible(true);
         setRequestSuccess(true);
       } else {

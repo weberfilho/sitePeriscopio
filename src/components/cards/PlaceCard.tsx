@@ -17,12 +17,11 @@ const PlaceCard = (props: placeResume) => {
       <div className="flex w-3/4 flex-col p-2">
         <h1 className="font-serif text-2xl font-bold italic">{props.name}</h1>
         <div className="flex flex-row">
-          {/* <h3 className='inline font-bold text-lg '>Bairro: </h3> */}
           <img
             src="/city.ico"
             className="h-6 w-5 self-center pt-2"
             alt="imagem"
-          />         
+          />
           <h3 className="mt-2 inline text-lg italic">{`${"  "} ${props.neighborhood}`}</h3>
         </div>
       </div>

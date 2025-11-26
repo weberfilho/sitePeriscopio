@@ -5,9 +5,8 @@ import { EventData } from "@/interfaces/event";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { format, fromUnixTime, getTime, parse, parseISO } from "date-fns";
-import { Locale, ptBR } from "date-fns/locale";
+import { ptBR } from "date-fns/locale";
 import createApiInstance from "@/api/api";
-import { useRouter } from "next/router";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
 

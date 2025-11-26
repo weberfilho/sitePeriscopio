@@ -5,7 +5,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import { Comment } from "@/interfaces/comment";
-import api from "@/api/api";
 import createApiInstance from "@/api/api";
 
 interface Props {
@@ -25,7 +24,6 @@ const CommentsList = ({ params }: Props) => {
             place_id: params.idplace,
           },
         });
-        //console.log("Data:", data);
 
         if (status === 200) {
           setComments(data.comments);

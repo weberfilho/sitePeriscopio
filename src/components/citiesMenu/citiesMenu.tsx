@@ -21,7 +21,7 @@ const validationSchema = zod.object({
   city: zod.string().min(3, { message: "Digite no minimo três caracteres" }),
 });
 
-export const CitiesMenu = () => {
+const CitiesMenu = () => {
   const {
     register,
     handleSubmit,
@@ -82,7 +82,7 @@ export const CitiesMenu = () => {
           )}
           <div className="flex flex-row justify-between">
             <input
-              {...register("city")}              
+              {...register("city")}
               className="w-9/12 border-2 border-black"
             />
 

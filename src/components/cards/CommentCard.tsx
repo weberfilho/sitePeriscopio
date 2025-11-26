@@ -4,14 +4,6 @@ import { ptBR } from "date-fns/locale";
 import React from "react";
 import { Rating } from "react-simple-star-rating";
 
-// interface Comment {
-//   id: number;
-//   userName: string;
-//   commentText: string;
-//   rating: number;
-//   date: string | Date;
-// }
-
 const CommentCard = (props: CommentCardData) => {
   const formattedDate = format(props.date, "dd/MM/yy", {
     locale: ptBR,

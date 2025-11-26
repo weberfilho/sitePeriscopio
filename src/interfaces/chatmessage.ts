@@ -12,17 +12,6 @@ export interface ReceiveidMessage {
   };
 }
 
-export interface SentMessage {
-  name: string;
-}
-
-export interface ChatData {
-  id: number;
-  userName: string;
-  message: string;
-  date: Date;
-}
-
 export interface ShortDataMessage {
   textmessage: string;
 }

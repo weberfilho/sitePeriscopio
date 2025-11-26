@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import PlaceCard from "@/components/cards/PlaceCard";
 import * as zod from "zod";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { PlaceShortData } from "@/interfaces/place";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
@@ -17,13 +15,6 @@ import { useCityStorage } from "@/storage/city";
 interface Props {
   params: { idtype: number };
 }
-type formData = {
-  place: string;
-};
-
-const validationSchema = zod.object({
-  place: zod.string().min(3, { message: "Digite no minimo três caracteres" }),
-});
 
 var orderType = 1;
 
@@ -40,13 +31,6 @@ const PlaceList = ({ params }: Props) => {
 
   const cityId = useCityStorage().cityId;
   const api = createApiInstance();
-  const {
-    register,
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<formData>({ resolver: zodResolver(validationSchema) });
 
   async function getPlaces() {
     try {
@@ -113,7 +97,7 @@ const PlaceList = ({ params }: Props) => {
             orderPlacesByDistance(latitude, longitude);
           },
           (err) => {
-            // setError(err.message);
+            // TODO: Handle geolocation error
           },
         );
       }
@@ -137,7 +121,6 @@ const PlaceList = ({ params }: Props) => {
   }, [cityId]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    
     let searchTerm = event.target.value;
     if (searchTerm?.length >= 3) {
       setFilteredPlaces(

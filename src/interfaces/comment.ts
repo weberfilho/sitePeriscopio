@@ -11,13 +11,6 @@ export interface Comment {
   };
 }
 
-export interface SentComment {
-  user_id: number;
-  comment_text: string;
-  place_id: number;
-  score: number;
-}
-
 export interface ShortDataComment {
   assessment: string;
 }

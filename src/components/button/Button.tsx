@@ -1,5 +1,4 @@
 import React from "react";
-import { any } from "zod";
 
 type ButtonType = "button" | "submit";
 
@@ -16,12 +15,11 @@ const Button = ({
   title,
   width = "w-full",
   padding = "px-2 py-6",
-  // click = () => {}
 }: Props) => {
   return (
     <button
       type={type}
-      className={`rounded-xl bg-gradient-to-br from-roxo2 via-cyan-700 to-verde text-xl text-white ${width} ${padding}`} 
+      className={`rounded-xl bg-gradient-to-br from-roxo2 via-cyan-700 to-verde text-xl text-white ${width} ${padding}`}
     >
       {title}
     </button>
