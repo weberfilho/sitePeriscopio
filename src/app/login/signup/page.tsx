@@ -46,12 +46,6 @@ const SignUp = () => {
     return value;
   };
 
-  const handleChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formattedValue = formatDate(e.target.value);
-
-    setValue("birthday", formattedValue);
-  };
-
   const onSubmit: SubmitHandler<SignUpData> = async (formData) => {
     try {
       const { status, data } = await api.post("auth/signup", {

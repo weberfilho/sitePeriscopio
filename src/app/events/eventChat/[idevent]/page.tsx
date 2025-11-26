@@ -1,15 +1,20 @@
 "use client";
 
-import createApiInstance from "@/api/api";
+import React, { useEffect, useState } from "react";
+
+import { useRouter } from "next/navigation";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+import PopUp from "@/components/popup/Popup";
 import Button from "@/components/button/Button";
 import ChatCard from "@/components/cards/ChatCard";
-import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
-import { ReceiveidMessage, ShortDataMessage } from "@/interfaces/chatmessage";
+
 import { useUserStorage } from "@/storage/user";
-import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/navigation";
+
+import createApiInstance from "@/api/api";
+
+import { ReceiveidMessage, ShortDataMessage } from "@/interfaces/chatmessage";
 
 interface Props {
   params: { idevent: number };
@@ -27,9 +32,9 @@ const EventChat = ({ params }: Props) => {
     formState: { errors },
   } = useForm<any>();
 
+  const router = useRouter();
   const api = createApiInstance();
   const { userId } = useUserStorage();
-  const router = useRouter();
 
   function auxCheckLogin() {
     setShowInitialPopUp(false);

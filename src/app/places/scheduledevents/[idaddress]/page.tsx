@@ -1,7 +1,6 @@
 "use client";
 
 import createApiInstance from "@/api/api";
-import api from "@/api/api";
 import EventCard from "@/components/cards/EventCard";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";

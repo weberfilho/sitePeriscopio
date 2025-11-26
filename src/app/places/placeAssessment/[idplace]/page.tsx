@@ -2,8 +2,7 @@
 
 import Button from "@/components/button/Button";
 
-import { SentComment, ShortDataComment } from "@/interfaces/comment";
-import Link from "next/link";
+import { ShortDataComment } from "@/interfaces/comment";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -26,12 +25,10 @@ const Assessment = ({ params }: Props) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<any>();
 
   const handleScore = (data: number) => {
-    console.log(data);
     setScore(data);
   };
 
@@ -43,7 +40,6 @@ const Assessment = ({ params }: Props) => {
     router.push("/login/signin");
   }
   function checkLogin() {
-    console.log(userId);
     userId == null ? setShowInitialPopUp(true) : setShowInitialPopUp(false);
   }
 

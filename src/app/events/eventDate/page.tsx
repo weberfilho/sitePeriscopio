@@ -15,10 +15,8 @@ const eventDate = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const today: Date = new Date();
-  console.log(today);
 
   const formattedDate = format(today, "yyyy-MM-dd");
-  console.log(formattedDate);
 
   function handleShowDatePicker() {
     setShowDatePicker(true);
