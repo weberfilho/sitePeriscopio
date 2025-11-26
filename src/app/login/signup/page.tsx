@@ -11,7 +11,7 @@ import { SignUpData } from "@/interfaces/user";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
 import createApiInstance from "@/api/api";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 const validationData = z.object({
   name: z.string().nonempty("Campo obrigatório"),
@@ -69,7 +69,7 @@ const SignUp = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
+        const axiosError = error as any;
         if (axiosError.response?.data?.payload) {
           setPopUpInfo({
             isVisible: true,
