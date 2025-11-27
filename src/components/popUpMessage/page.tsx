@@ -10,11 +10,7 @@ const PopUpMessage = ({ text, action }: Props) => {
   return (
     <div className="fixed left-1/2 top-1/2 flex h-fit w-[360px] -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-lg border-2 border-roxo2 bg-slate-50">
       <div className="flex h-fit w-full flex-col items-center">
-        <img
-          src="../../../public/periLogo.png"
-          className="mt-4 w-32"
-          alt="imagem"
-        />
+        <img src="/logo.png" className="mt-4 w-32" alt="imagem" />
       </div>
       <p className="text-lgf bold pb-2 font-sans font-semibold italic">
         Fun Guide
