@@ -39,7 +39,7 @@ const CommentsList = ({ params }: Props) => {
 
   return (
     <div className="mb-8 px-2">
-      <div className="mb-8 mt-4 flex flex-col">
+      <div className="mb-2 mt-4 flex flex-col">
         <h1 className="px-4 text-center font-serif text-4xl font-bold">
           {comments[0]?.place.name}
         </h1>
@@ -52,6 +52,12 @@ const CommentsList = ({ params }: Props) => {
         </div>
         <p className="w-fit self-center">{`(${comments?.length ? comments?.length : 0} Comentarios)`}</p>
       </div>
+      <div className="mb-4 flex items-center justify-center">
+        <Link href={`/places/placeAssessment/${params.idplace}`} className="">
+          <Button title="AVALIAR ESTE LOCAL" padding="px-6 py-2" />
+        </Link>
+      </div>
+
       <ul className="mb-8">
         {comments?.length &&
           comments.length > 0 &&
@@ -67,9 +73,6 @@ const CommentsList = ({ params }: Props) => {
             </li>
           ))}
       </ul>
-      <Link href={`/places/placeAssessment/${params.idplace}`} className="">
-        <Button title="AVALIAR ESTE LOCAL" />
-      </Link>
     </div>
   );
 };

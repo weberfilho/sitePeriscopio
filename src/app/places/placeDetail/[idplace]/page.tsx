@@ -77,14 +77,33 @@ const placeDetail = ({ params }: Props) => {
         </PopUp>
       )}
 
-      <p className="mt-1 py-4">{place?.description}</p>
+      <p className="mt-1 py-2">{place?.description}</p>
+      <div className="mb-2 flex flex-row">
+        <img
+          src="/whatsapp.ico"
+          className="w-10 self-center"
+          onClick={() => {
+            place.url_contact
+              ? window.open(
+                  `
+                  https://wa.me/${place.url_contact}`,
+                  "_blank",
+                )
+              : setIsPopUpVisible(true);
+          }}
+          alt="imagem"
+        />
+        <img src="/instagram.ico" className="w-12 self-center" alt="imagem" />
+        <img src="/facebook.ico" className="w-10 self-center" alt="imagem" />
+      </div>
 
       <p className="pb-4 italic">
         <strong className="font-bold italic">Endereço:</strong>
         {` ${place?.adress?.street}, ${place?.adress?.number} ${place?.adress?.neighborhood} -  ${place?.city?.name} ${place?.city?.state}`}
       </p>
+
       {place.category_id === 1 || place.category_id === 2 ? (
-        <div className="mb-8 grid grid-cols-2 gap-4">
+        <div className="mb-8 grid grid-cols-2 gap-2">
           <Link href={`/places/scheduledevents/${place.adress_id}`}>
             <Button title="AGENDA" />
           </Link>
@@ -112,18 +131,8 @@ const placeDetail = ({ params }: Props) => {
           <Link href={`/places/placeComents/${place.id}`}>
             <Button title="AVALIAÇÕES" />
           </Link>
-          <div
-            onClick={() => {
-              place.url_contact
-                ? window.open(
-                    `
-                  https://wa.me/${place.url_contact}`,
-                    "_blank",
-                  )
-                : setIsPopUpVisible(true);
-            }}
-          >
-            <Button title="CONTATO" />
+          <div>
+            <Button title="UBER" />
           </div>
         </div>
       ) : (

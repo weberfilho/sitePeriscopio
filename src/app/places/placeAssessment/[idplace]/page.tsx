@@ -39,6 +39,11 @@ const Assessment = ({ params }: Props) => {
     setShowInitialPopUp(false);
     router.push("/login/signin");
   }
+
+  function auxClosePopUp() {
+    setShowInitialPopUp(false);
+    router.back();
+  }
   function checkLogin() {
     userId == null ? setShowInitialPopUp(true) : setShowInitialPopUp(false);
   }
@@ -106,7 +111,7 @@ const Assessment = ({ params }: Props) => {
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage
             text="Seu comentário foi enviado com sucesso. Obrigado por ajudar a construir uma comunidade cada vez melhor"
-            action={() => setIsPopUpVisible(false)}
+            action={() => auxClosePopUp()}
           />
         </PopUp>
       ) : (

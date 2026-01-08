@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import Button from "../button/Button";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Link from "next/link";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
 
 type Props = {
   action: () => void;
