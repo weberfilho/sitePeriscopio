@@ -50,7 +50,7 @@ const CommentsList = ({ params }: Props) => {
             SVGstyle={{ display: "inline" }}
           />
         </div>
-        <p className="w-fit self-center">{`(${comments?.length ? comments?.length : 0} Comentarios)`}</p>
+        <p className="w-fit self-center">{`(${comments?.length ? comments?.length : "0"} Comentarios)`}</p>
       </div>
       <div className="mb-4 flex items-center justify-center">
         <Link href={`/places/placeAssessment/${params.idplace}`} className="">
@@ -60,7 +60,7 @@ const CommentsList = ({ params }: Props) => {
 
       <ul className="mb-8">
         {comments?.length &&
-          comments.length > 0 &&
+          comments.length >= 0 &&
           comments.map((comment) => (
             <li key={comment.id} className="mx-2">
               <CommentCard

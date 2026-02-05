@@ -51,7 +51,7 @@ const SignIn = () => {
         password: formData.password,
       });
       if (status === 200) {
-        console.log("voce esta logado");
+        
         setToken(data.authToken);
         const { status, data: userData } = await api.get("auth/me");
         if (status === 200 && userData) {

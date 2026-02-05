@@ -71,13 +71,15 @@ const placeDetail = ({ params }: Props) => {
       {isPopUpVisible && (
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage
-            text="Serviço indisponível para este evento"
+            text="Serviço indisponível para este local"
             action={() => setIsPopUpVisible(false)}
           />
         </PopUp>
       )}
 
       <p className="mt-1 py-2">{place?.description}</p>
+
+      <strong className="mt-2 font-bold italic">Contato:</strong>
       <div className="mb-2 flex flex-row">
         <img
           src="/whatsapp.ico"
@@ -93,8 +95,34 @@ const placeDetail = ({ params }: Props) => {
           }}
           alt="imagem"
         />
-        <img src="/instagram.ico" className="w-12 self-center" alt="imagem" />
-        <img src="/facebook.ico" className="w-10 self-center" alt="imagem" />
+        <img
+          src="/instagram.ico"
+          className="w-12 self-center"
+          onClick={() => {
+            place.instagram
+              ? window.open(
+                  `
+                  ${place.instagram}`,
+                  "_blank",
+                )
+              : setIsPopUpVisible(true);
+          }}
+          alt="imagem"
+        />
+        <img
+          src="/facebook.ico"
+          className="w-10 self-center"
+          onClick={() => {
+            place.facebook
+              ? window.open(
+                  `
+                 ${place.facebook}`,
+                  "_blank",
+                )
+              : setIsPopUpVisible(true);
+          }}
+          alt="imagem"
+        />
       </div>
 
       <p className="pb-4 italic">
@@ -113,7 +141,7 @@ const placeDetail = ({ params }: Props) => {
           <div
             onClick={() => {
               place.url_juckebox
-                ? window.open(`https://${place.url_juckebox}`, "_blank")
+                ? window.open(`${place.url_juckebox}`, "_blank")
                 : setIsPopUpVisible(true);
             }}
           >
@@ -122,7 +150,7 @@ const placeDetail = ({ params }: Props) => {
           <div
             onClick={() => {
               place.url_menu
-                ? window.open(`https://${place.url_menu}`, "_blank")
+                ? window.open(`${place.url_menu}`, "_blank")
                 : setIsPopUpVisible(true);
             }}
           >
@@ -140,7 +168,7 @@ const placeDetail = ({ params }: Props) => {
           <div
             onClick={() => {
               place.url_schedule
-                ? window.open(`https://${place.url_schedule}`, "_blank")
+                ? window.open(`${place.url_schedule}`, "_blank")
                 : setIsPopUpVisible(true);
             }}
           >

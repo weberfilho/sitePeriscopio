@@ -8,16 +8,23 @@ import { EventShortData } from "@/interfaces/event";
 import { useCityStorage } from "@/storage/city";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   params: { idaddress: number };
 };
 
 const ScheduledEvents = ({ params }: Props) => {
+  const router = useRouter();
   const [eventList, setEventList] = useState<EventShortData[]>([]);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const cityId = useCityStorage().cityId;
   const api = createApiInstance();
+
+  function closePopUp() {
+    setIsPopUpVisible(false);
+    router.back();
+  }
 
   async function getScheduledEvents() {
     try {
@@ -50,7 +57,7 @@ const ScheduledEvents = ({ params }: Props) => {
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage
             text="Não existem eventos cadastrados para esta estabelecimento"
-            action={() => setIsPopUpVisible(false)}
+            action={() => closePopUp()}
           />
         </PopUp>
       )}

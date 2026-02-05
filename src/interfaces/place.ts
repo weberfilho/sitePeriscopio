@@ -47,6 +47,8 @@ export interface PlaceData {
     number: number;
     neighborhood: string;
   };
+  instagram: string;
+  facebook: string;
 }
 
 export interface PlaceSuggestion {

@@ -3,8 +3,8 @@
 import createApiInstance from "@/api/api";
 import PopUp from "@/components/popup/Popup";
 import PopUpMessage from "@/components/popUpMessage/page";
-
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   params: { idplace: number };
@@ -15,11 +15,17 @@ interface Picture {
 }
 
 const PlacePictures = ({ params }: Props) => {
+  const router = useRouter();
   const [images, setImages] = useState<Picture[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [namePlace, setNamePlace] = useState<string>("");
   const api = createApiInstance();
+
+  function closePopUp() {
+    setIsPopUpVisible(false);
+    router.back();
+  }
 
   async function getPlacePictures() {
     try {
@@ -82,7 +88,7 @@ const PlacePictures = ({ params }: Props) => {
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage
             text="Não existem fotos cadastradas para este local"
-            action={() => setIsPopUpVisible(false)}
+            action={() => closePopUp()}
           />
         </PopUp>
       )}
