@@ -167,7 +167,7 @@ const SignUp = () => {
       {isPopUpVisible && requestSuccess ? (
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage
-            text="Seu cadastro foi realizado com sucesso com sucesso. Sua senha foi enviada para o seu email cadastrado"
+            text="Seu cadastro foi realizado com sucesso com sucesso. Faça seu login e divirta-se conosco"
             action={() => setIsPopUpVisible(false)}
           />
         </PopUp>

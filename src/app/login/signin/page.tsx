@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-
+import React, { useState } from "react";
 import createApiInstance from "@/api/api";
 import Button from "@/components/button/Button";
 import { SignInData } from "@/interfaces/user";
@@ -12,6 +11,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import PopUp from "@/components/popup/Popup";
+import PopUpMessage from "@/components/popUpMessage/page";
 
 const validationData = z.object({
   email: z.string().email("Digite um e-mail válido"),
@@ -33,9 +34,16 @@ const SignIn = () => {
 
   const api = createApiInstance();
   const router = useRouter();
-
   const { setToken } = useTokenStorage();
   const { setUserData } = useUserStorage();
+  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [auxPopUp, setAuxPopUp] = useState(false);
+
+  function closePopUp() {
+    setIsPopUpVisible(false);
+    // router.back();
+    router.push("/");
+  }
 
   const getUserData = async () => {
     const { status, data } = await api.get("auth/me");
@@ -51,17 +59,16 @@ const SignIn = () => {
         password: formData.password,
       });
       if (status === 200) {
-        
         setToken(data.authToken);
         const { status, data: userData } = await api.get("auth/me");
         if (status === 200 && userData) {
-          console.log("Data:", userData);
           setUserData(userData.id, userData.name);
-          router.push("/");
+          setIsPopUpVisible(true);
         }
       }
     } catch (error) {
       console.error("SignUp, onSubmit error:", error);
+
       //to do adicionar mensagem de erro
     } finally {
       reset();
@@ -95,8 +102,11 @@ const SignIn = () => {
           {errors.password && (
             <p className="text-red-700">{errors.password.message}</p>
           )}
-          <Link href="../signup">Esqueci minha senha</Link>
+          <div className="mt-2" onClick={() => setAuxPopUp(true)}>
+            Esqueci minha senha
+          </div>
         </div>
+
         <div className="mt-12 grid grid-cols-2 gap-4">
           <Link href="/login/signup">
             <Button title="CADASTRAR" />
@@ -105,6 +115,24 @@ const SignIn = () => {
           <Button title="ENTRAR" type="submit" />
         </div>
       </form>
+      {isPopUpVisible && (
+        <PopUp isVisible={isPopUpVisible}>
+          <PopUpMessage
+            text={"Login realizado com sucesso"}
+            action={() => closePopUp()}
+          />
+        </PopUp>
+      )}
+      {auxPopUp && (
+        <PopUp isVisible={true}>
+          <PopUpMessage
+            text={
+              "Para recuperar sua senha envie um email para weberfilho@hotmail.com com o título Recuperar Senha"
+            }
+            action={() => setAuxPopUp(false)}
+          />
+        </PopUp>
+      )}
     </div>
   );
 };

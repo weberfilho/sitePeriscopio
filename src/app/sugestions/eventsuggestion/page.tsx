@@ -8,11 +8,18 @@ import { EventSuggestion } from "@/interfaces/event";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 const SuggestionEvent = () => {
+  const router = useRouter();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
   const api = createApiInstance();
+
+  function closePopUp() {
+    setIsPopUpVisible(false);
+    router.back();
+  }
 
   const {
     register,
@@ -95,14 +102,14 @@ const SuggestionEvent = () => {
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage
             text="Sua sugestão foi enviada com sucesso. Obrigado por ajudar a construir uma comunidade cada vez melhor"
-            action={() => setIsPopUpVisible(false)}
+            action={() => closePopUp()}
           />
         </PopUp>
       ) : (
         <PopUp isVisible={isPopUpVisible}>
           <PopUpMessage
             text="Tivemos alguns problemas ao enviar a sua sugestão. Por favor tente outra vez"
-            action={() => setIsPopUpVisible(false)}
+            action={() => closePopUp()}
           />
         </PopUp>
       )}

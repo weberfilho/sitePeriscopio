@@ -22,6 +22,7 @@ const Assessment = ({ params }: Props) => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
   const [showInitialPopUp, setShowInitialPopUp] = useState(false);
+  const [showAuxPopUp, setShowAuxPopUp] = useState(false);
   const {
     register,
     handleSubmit,
@@ -51,23 +52,27 @@ const Assessment = ({ params }: Props) => {
   useEffect(() => checkLogin(), [userId]);
 
   const onSubmit: SubmitHandler<ShortDataComment> = async (data) => {
-    try {
-      const response = await api.post("sentcomment", {
-        user_id: userId,
-        comment_text: data.assessment,
-        place_id: params.idplace,
-        score: score,
-      });
-      if (response.status === 200) {
-        setIsPopUpVisible(true);
-        setRequestSuccess(true);
-      } else {
-        setIsPopUpVisible(true);
-        setRequestSuccess(false);
+    if (score == 0) {
+      setShowAuxPopUp(true);
+    } else {
+      try {
+        const response = await api.post("sentcomment", {
+          user_id: userId,
+          comment_text: data.assessment,
+          place_id: params.idplace,
+          score: score,
+        });
+        if (response.status === 200) {
+          setIsPopUpVisible(true);
+          setRequestSuccess(true);
+        } else {
+          setIsPopUpVisible(true);
+          setRequestSuccess(false);
+        }
+      } catch (error) {
+        console.error("Erro getPlaces:", error);
+      } finally {
       }
-    } catch (error) {
-      console.error("Erro getPlaces:", error);
-    } finally {
     }
   };
 
@@ -119,6 +124,14 @@ const Assessment = ({ params }: Props) => {
           <PopUpMessage
             text="Tivemos alguns problemas ao enviar seu comentário. Por favor tente outra vez"
             action={() => setIsPopUpVisible(false)}
+          />
+        </PopUp>
+      )}
+      {showAuxPopUp && (
+        <PopUp isVisible={showAuxPopUp}>
+          <PopUpMessage
+            text="E necessário completar a avaliação atribuindo uma nota entre 1 e 5 estrelas"
+            action={() => setShowAuxPopUp(false)}
           />
         </PopUp>
       )}

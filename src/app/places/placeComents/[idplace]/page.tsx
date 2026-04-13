@@ -38,7 +38,7 @@ const CommentsList = ({ params }: Props) => {
   }, []);
 
   return (
-    <div className="mb-8 px-2">
+    <div className="mb-8 overflow-hidden px-2">
       <div className="mb-2 mt-4 flex flex-col">
         <h1 className="px-4 text-center font-serif text-4xl font-bold">
           {comments[0]?.place.name}
@@ -58,21 +58,23 @@ const CommentsList = ({ params }: Props) => {
         </Link>
       </div>
 
-      <ul className="mb-8">
-        {comments?.length &&
-          comments.length >= 0 &&
-          comments.map((comment) => (
-            <li key={comment.id} className="mx-2">
-              <CommentCard
-                id={comment.id}
-                userName={comment.user.name}
-                commentText={comment.comment_text}
-                rating={comment.score}
-                date={comment.created_at}
-              />
-            </li>
-          ))}
-      </ul>
+      <div className="overflow-y-auto">
+        <ul className="mb-8">
+          {comments?.length &&
+            comments.length >= 0 &&
+            comments.map((comment) => (
+              <li key={comment.id} className="mx-2">
+                <CommentCard
+                  id={comment.id}
+                  userName={comment.user.name}
+                  commentText={comment.comment_text}
+                  rating={comment.score}
+                  date={comment.created_at}
+                />
+              </li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 };
