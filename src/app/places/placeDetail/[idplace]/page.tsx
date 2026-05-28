@@ -145,7 +145,7 @@ const placeDetail = ({ params }: Props) => {
                 : setIsPopUpVisible(true);
             }}
           >
-            <Button title="JUCKEBOX" />
+            <Button title="PLAYLIST" />
           </div>
           <div
             onClick={() => {
